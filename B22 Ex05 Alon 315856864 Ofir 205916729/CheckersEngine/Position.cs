@@ -1,8 +1,16 @@
-﻿
-namespace CheckersOnConsole
+﻿namespace CheckersLogicEngine
 {
     public class Position
     {
+        
+        public enum eDirection
+        {
+            DownLeft,
+            DownRight,
+            UpLeft,
+            UpRight,
+        }
+
         //-------------------------------------------------------------------------------Members-------------------------------------------------------------------------------//
         private int m_Row;
         private int m_Column;
@@ -10,13 +18,14 @@ namespace CheckersOnConsole
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
         public int Row
         {
-            get
+            get 
             {
                 return m_Row;
             }
+
             set
             {
-                m_Row = value;
+                m_Row = value; 
             }
         }
 
@@ -24,11 +33,12 @@ namespace CheckersOnConsole
         {
             get
             {
-                return m_Column;
+                return m_Column; 
             }
+
             set
             {
-                m_Column = value;
+                m_Column = value; 
             }
         }
 
@@ -38,9 +48,32 @@ namespace CheckersOnConsole
             m_Column = i_Column;
         }
 
+        public Position GetThePositionLocatedInTheDirectionRelativeToThisPosition(eDirection i_RequestedDirection)
+        {
+            Position requestedPosition = null;
+
+            switch(i_RequestedDirection)
+            {
+                case eDirection.DownLeft:
+                    requestedPosition = new Position(m_Row + 1, m_Column - 1);
+                    break;
+                case eDirection.DownRight:
+                    requestedPosition = new Position(m_Row + 1, m_Column + 1);
+                    break;
+                case eDirection.UpLeft:
+                    requestedPosition = new Position(m_Row - 1, m_Column - 1);
+                    break;
+                case eDirection.UpRight:
+                    requestedPosition = new Position(m_Row - 1, m_Column + 1);
+                    break;
+            }
+
+            return requestedPosition;
+        }
+
         public override bool Equals(object i_Object)
         {
-            bool equals = true;
+            bool equals;
 
             if (i_Object == null || this.GetType().Equals(i_Object.GetType()) == false)
             {
@@ -53,6 +86,11 @@ namespace CheckersOnConsole
             }
 
             return equals;
+        }
+
+        public override string ToString()
+        {
+            return $"({m_Row},{m_Column})";
         }
     }
 }

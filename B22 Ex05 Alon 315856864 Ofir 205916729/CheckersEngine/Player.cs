@@ -1,92 +1,109 @@
-﻿
-using System;
-using System.IO;
+﻿using System.Collections.Generic;
 
-namespace CheckersOnConsole
+namespace CheckersLogicEngine
 {
-    class Player
+    public class Player
     {
         //-------------------------------------------------------------------------------Members-------------------------------------------------------------------------------//
-        private GamePiece[] m_GamePiecesArray;
-        private string m_PlayerName;
-        private bool m_IsPlayersTurn;
-        private bool m_IsPlayerWon;
+        private readonly int r_InitialStoneAmount;
+        private readonly List<GamePiece> r_GamePiecesList;
+        private readonly string r_PlayerName;
+        private readonly bool r_IsPlayingFirst;
         private int m_CurrentNumberOfStones;
+        private int m_WinningPoints;
 
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
         public int NumberOfGamePiecesLeft
         {
-            get
+            get 
             {
                 return m_CurrentNumberOfStones;
             }
         }
 
-        public string Name
+        public int WinningPoints
         {
-            get
+            get 
             {
-                return m_PlayerName;
+                return m_WinningPoints;
+            }
+
+            set
+            {
+                m_WinningPoints = value;
             }
         }
 
-        public GamePiece[] GamePieces
+        public string Name
+        { 
+            get
+            {
+                return r_PlayerName; 
+            }
+        }
+
+        public List<GamePiece> GamePieces
         {
-            get { return m_GamePiecesArray; }
+            get 
+            {
+                return r_GamePiecesList;
+            }
         }
 
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
-        public Player(string i_PlayerName, int i_NumberOfGamePieces, bool i_IsThePlayerPlayingFirst, int i_NumberOfRowsOnTheBoardGame)
+        public Player(string i_PlayerName, int i_NumberOfGamePieces, bool i_IsThePlayerPlayingFirst, int i_NumberOfRowsOnTheGameBoard)
         {
-            m_PlayerName = i_PlayerName;
-            m_GamePiecesArray = new GamePiece[i_NumberOfGamePieces];
-            m_CurrentNumberOfStones = i_NumberOfGamePieces;
-            m_IsPlayerWon = false;
-            m_IsPlayersTurn = i_IsThePlayerPlayingFirst;
+            r_PlayerName = i_PlayerName;
+            r_GamePiecesList = new List<GamePiece>(i_NumberOfGamePieces);
+            r_InitialStoneAmount = i_NumberOfGamePieces;
+            r_IsPlayingFirst = i_IsThePlayerPlayingFirst;
+            m_WinningPoints = 0;
 
-            initializeGamePiecesPositions(i_NumberOfRowsOnTheBoardGame);
+            InitializeGamePiecesPositions(i_NumberOfRowsOnTheGameBoard);
         }
 
-        //----------------------------------------------------------------------------initialization---------------------------------------------------------------------------//
-        private void initializeGamePiecesPositions(int i_NumberOfRowsOnTheBoardGame)
+        //----------------------------------------------------------------------------Initialization---------------------------------------------------------------------------//
+        public void InitializeGamePiecesPositions(int i_NumberOfRowsOnTheGameBoard)
         {
-            int numberOfGamePiecesInARow = i_NumberOfRowsOnTheBoardGame / 2;
-            Position gamePiecePosition = calculateTheStartingPositionOfTheGamePieces(i_NumberOfRowsOnTheBoardGame);
-            int currentRow = gamePiecePosition.Row, currentColumn = gamePiecePosition.Column;
-            char pawnSymbol = m_IsPlayersTurn ? Constants.sr_FirstPlayerPawnSymbol : Constants.sr_SecondPlayerPawnSymbol;
-            Constants.ePlayerProperty playerProperty = m_IsPlayersTurn ? Constants.ePlayerProperty.Player1 : Constants.ePlayerProperty.Player2;
+            int numberOfGamePiecesInARow = i_NumberOfRowsOnTheGameBoard / 2;
+            Position currentGamePiecePosition = calculateTheStartingPositionOfTheGamePiecesDeployment(i_NumberOfRowsOnTheGameBoard);
+            int currentRow = currentGamePiecePosition.Row, currentColumn = currentGamePiecePosition.Column;
+            char pawnSymbol = r_IsPlayingFirst ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
+            GamePiece.ePlayerProperty playerProperty = r_IsPlayingFirst ? GamePiece.ePlayerProperty.Player1 : GamePiece.ePlayerProperty.Player2;
 
-            for (int gamePiecesCounter = 0; gamePiecesCounter < m_CurrentNumberOfStones; ++gamePiecesCounter)
+            m_CurrentNumberOfStones = r_InitialStoneAmount;
+            r_GamePiecesList.Clear();
+            for (int pieceCounter = 0; pieceCounter < r_InitialStoneAmount; ++pieceCounter)
             {
-                m_GamePiecesArray[gamePiecesCounter] = new GamePiece(pawnSymbol, gamePiecePosition, gamePiecesCounter, playerProperty);
-
-                calculateTheStartingPositionOfTheNextGamePiece(gamePiecesCounter, ref currentRow, ref currentColumn, out gamePiecePosition, numberOfGamePiecesInARow);
+                r_GamePiecesList.Add(new GamePiece(pawnSymbol, currentGamePiecePosition, playerProperty));
+                calculateTheStartingPositionOfTheNextGamePiece(pieceCounter + 1, ref currentRow, ref currentColumn, out currentGamePiecePosition, numberOfGamePiecesInARow);
             }
         }
 
-        private Position calculateTheStartingPositionOfTheGamePieces(int i_NumberOfRowsOnTheBoardGame)
+        private Position calculateTheStartingPositionOfTheGamePiecesDeployment(int i_NumberOfRowsOnTheGameBoard)
         {
             int startingRow, startingColumn;
 
-            if (m_IsPlayersTurn == true)
+            if (r_IsPlayingFirst == false)
             {
                 startingRow = 0;
                 startingColumn = 1;
             }
             else
             {
-                startingColumn = 0;
-
-                switch (i_NumberOfRowsOnTheBoardGame)
+                switch (i_NumberOfRowsOnTheGameBoard)
                 {
                     case 6:
                         startingRow = 4;
+                        startingColumn = 1;
                         break;
                     case 10:
                         startingRow = 6;
+                        startingColumn = 1;
                         break;
                     default:
                         startingRow = 5;
+                        startingColumn = 0;
                         break;
                 }
             }
@@ -94,70 +111,91 @@ namespace CheckersOnConsole
             return new Position(startingRow, startingColumn);
         }
 
-        private void calculateTheStartingPositionOfTheNextGamePiece(int i_GamePiecesCounter, ref int o_CurrentRow, ref int o_CurrentColumn, out Position o_GamePiecePosition, int i_NumberOfGamePiecesInARow)
+        public int CalculateGamePiecesPoints()
         {
-            if (++i_GamePiecesCounter % i_NumberOfGamePiecesInARow == 0)
+            int calculatedPoints = 0;
+
+            foreach(GamePiece currentGamePiece in r_GamePiecesList)
             {
-                ++o_CurrentRow;
-                o_CurrentColumn = o_CurrentRow % 2 == 0 ? 1 : 0;
+                if(currentGamePiece.IsKing == true)
+                {
+                    calculatedPoints += GamePiece.k_PointsForAKing;
+                }
+                else
+                {
+                    calculatedPoints += GamePiece.k_PointsForAPawn;
+                }
+            }
+
+            return calculatedPoints;
+        }
+
+        private void calculateTheStartingPositionOfTheNextGamePiece(
+            int i_PieceCounter,
+            ref int io_CurrentRow,
+            ref int io_CurrentColumn,
+            out Position o_GamePiecePosition,
+            int i_NumberOfGamePiecesInARow
+            )
+        {
+            if (i_PieceCounter % i_NumberOfGamePiecesInARow == 0)
+            {
+                io_CurrentRow++;
+
+                if(io_CurrentRow % 2 == 0)
+                {
+                    io_CurrentColumn = 1;
+                }
+                else
+                {
+                    io_CurrentColumn = 0;
+                }
             }
             else
             {
-                o_CurrentColumn += 2;
+                io_CurrentColumn += 2;
             }
 
-            o_CurrentColumn %= 8;
-            o_GamePiecePosition = new Position(o_CurrentRow, o_CurrentColumn);
+            o_GamePiecePosition = new Position(io_CurrentRow, io_CurrentColumn);
         }
 
-        //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
-        public void PlayersTurnToPlay()
-        {
-            m_IsPlayersTurn = true;
-        }
 
-        public void PlayerHasWonTheGame()
+        //-------------------------------------------------------------------------------Checks--------------------------------------------------------------------------------//
+        public bool CheckIfThePlayerHasAnyPossibleMoves()
         {
-            m_IsPlayerWon = true;
-        }
+            bool thePlayerHasPossibleMoves = false;
 
-        public bool DidThePlayerWinTheGame()
-        {
-            return m_IsPlayerWon;
-        }
-
-        public void PlayersTurnEnded()
-        {
-            m_IsPlayersTurn = false;
-
-            for(int i = 0; i < m_CurrentNumberOfStones; ++i)
+            foreach(GamePiece currentGamePiece in r_GamePiecesList)
             {
-                m_GamePiecesArray[i].DeleteGamePiecePossibleMoves();
-            }
-        }
-
-        public bool IsThePlayerHasAnyPossibleMoves()
-        {
-            bool hasPossibleMoves = false;
-
-            for(int i = 0; i < m_CurrentNumberOfStones; ++i)
-            {
-                if(m_GamePiecesArray[i].IsTheGamePieceHasAnyPossibleMoves())
+                if (currentGamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
                 {
-                    hasPossibleMoves = true;
+                    thePlayerHasPossibleMoves = true;
                     break;
                 }
             }
 
-            return hasPossibleMoves;
+            return thePlayerHasPossibleMoves;
         }
 
-        public void DeleteAGamePieceByIndex(int i_GamePieceIndexInPlayerGamePiecesArray)
+        public bool CheckIfThePlayerIsPlayingFirst()
         {
-            --m_CurrentNumberOfStones;
+            return r_IsPlayingFirst;
+        }
 
-            m_GamePiecesArray[i_GamePieceIndexInPlayerGamePiecesArray] = m_GamePiecesArray[m_CurrentNumberOfStones];
-            m_GamePiecesArray[i_GamePieceIndexInPlayerGamePiecesArray].GamePieceIndex = i_GamePieceIndexInPlayerGamePiecesArray;
+        //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
+
+        public void ClearPlayersPossibleMoves()
+        {
+            foreach (GamePiece currentGamePiece in r_GamePiecesList)
+            {
+                currentGamePiece.ClearGamePiecePossibleMoves();
+            }
+        }
+
+        public void DeleteAGamePieceFromGamePiecesList(GamePiece i_DeletedGamePiece)
+        {
+            r_GamePiecesList.Remove(i_DeletedGamePiece);
+            m_CurrentNumberOfStones--;
         }
     }
 }

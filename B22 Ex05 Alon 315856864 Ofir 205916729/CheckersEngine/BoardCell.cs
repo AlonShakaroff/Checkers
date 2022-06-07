@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CheckersOnConsole
+﻿namespace CheckersLogicEngine
 {
     public class BoardCell
     {
@@ -12,6 +10,7 @@ namespace CheckersOnConsole
         public GamePiece GamePiece
         {
             get { return m_GamePiece; }
+
             set
             {
                 m_GamePiece = value;
@@ -31,6 +30,5 @@ namespace CheckersOnConsole
         {
             return m_IsTaken;
         }
-
     }
 }

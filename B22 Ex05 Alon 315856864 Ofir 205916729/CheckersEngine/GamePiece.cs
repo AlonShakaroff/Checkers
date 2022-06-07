@@ -1,56 +1,83 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace CheckersOnConsole
+namespace CheckersLogicEngine
 {
     public class GamePiece
     {
+        public enum ePlayerProperty
+        {
+            Player1,
+            Player2,
+        }
+
         //-------------------------------------------------------------------------------Members-------------------------------------------------------------------------------//
+        public const char k_FirstPlayerPawnSymbol = 'X';
+        public const char k_SecondPlayerPawnSymbol = 'O';
+        public const char k_FirstPlayerKingSymbol = 'K';
+        public const char k_SecondPlayerKingSymbol = 'U';
+        public const int k_PointsForAKing = 4;
+        public const int k_PointsForAPawn = 1;
         private bool m_IsKing;
         private char m_Symbol;
-        private int m_GamePieceIndexOnGamePiecesArray;
         private Position m_Position;
-        private List<Position> m_PossibleMoves;
-        private List<Position> m_Threads;
-        private Constants.ePlayerProperty m_PlayerProperty;
+        private readonly List<Position> r_PossibleMoves;
+        private readonly ePlayerProperty r_PlayerProperty;
 
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
         public char Symbol
         {
-            get { return m_Symbol; }
+            get 
+            {
+                return m_Symbol; 
+            }
         }
 
         public bool IsKing
         {
-            get { return m_IsKing; }
+            get 
+            { 
+                return m_IsKing; 
+            }
         }
 
-        public Constants.ePlayerProperty PlayerProperty
+        public ePlayerProperty PlayerProperty
         {
-            get { return m_PlayerProperty; }
-        }
-
-        public int GamePieceIndex
-        {
-            get { return m_GamePieceIndexOnGamePiecesArray; }
-            set { m_GamePieceIndexOnGamePiecesArray = value; }
+            get 
+            {
+                return r_PlayerProperty; 
+            }
         }
 
         public Position Position
         {
-            get { return m_Position; }
-            set { m_Position = value; }
+            get 
+            { 
+                return m_Position; 
+            }
+
+            set 
+            {
+                m_Position = value;
+            }
+        }
+
+        public List<Position> PossibleMoves
+        {
+            get 
+            { 
+                return r_PossibleMoves;
+            }
         }
 
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
-        public GamePiece(char i_Symbol, Position i_Position, int i_PawnIndex, Constants.ePlayerProperty i_PlayerProperty)
+        public GamePiece(char i_Symbol, Position i_Position, ePlayerProperty i_PlayerProperty)
         {
             m_IsKing = false;
             m_Symbol = i_Symbol;
             m_Position = i_Position;
-            m_GamePieceIndexOnGamePiecesArray = i_PawnIndex;
-            m_PossibleMoves = new List<Position>();
-            m_Threads = new List<Position>();
-            m_PlayerProperty = i_PlayerProperty;
+            r_PossibleMoves = new List<Position>();
+            r_PlayerProperty = i_PlayerProperty;
         }
 
         //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
@@ -58,31 +85,31 @@ namespace CheckersOnConsole
         {
             m_IsKing = true;
 
-            m_Symbol = m_Symbol == Constants.sr_FirstPlayerPawnSymbol ? Constants.sr_FirstPlayerKingSymbol : Constants.sr_SecondPlayerKingSymbol;
+            m_Symbol = m_Symbol == k_FirstPlayerPawnSymbol ? k_FirstPlayerKingSymbol : k_SecondPlayerKingSymbol;
         }
 
-        public void NewPossibleMoveAvailable(Position i_NewPossibleMovePosition)
+        public void AddPossibleMove(Position i_NewPossibleMovePosition)
         {
-            m_PossibleMoves.Add(i_NewPossibleMovePosition);
+            r_PossibleMoves.Add(i_NewPossibleMovePosition);
         }
 
-        public bool IsTheGamePieceHasAnyPossibleMoves()
+        public bool CheckIfTheGamePieceHasAnyPossibleMoves()
         {
-            return m_PossibleMoves.Count != 0;
+            return r_PossibleMoves.Count != 0;
         }
 
-        public void DeleteGamePiecePossibleMoves()
+        public void ClearGamePiecePossibleMoves()
         {
-            m_PossibleMoves.Clear();
+            r_PossibleMoves.Clear();
         }
 
-        public bool IsThePositionAPossibleMove(Position i_Position)
+        public bool CheckIfThePositionIsAPossibleMove(Position i_Position)
         {
             bool validMove = false;
 
-            foreach(Position possibleMove in m_PossibleMoves)
+            foreach(Position currentPossibleMove in r_PossibleMoves)
             {
-                if(possibleMove.Equals(i_Position))
+                if(currentPossibleMove.Equals(i_Position))
                 {
                     validMove = true;
                     break;
@@ -92,14 +119,20 @@ namespace CheckersOnConsole
             return validMove;
         }
 
-        public void AddANewThread(Position i_NewThread)
+        public Position GetThePositionAfterAnEatingMoveOfTheGamePiece()
         {
-            m_Threads.Add(i_NewThread);
-        }
+            Position newPositionAfterEating = null;
 
-        public void RemoveAllThreads()
-        {
-            m_Threads.Clear();
+            foreach(Position position in r_PossibleMoves)
+            {
+                if(Math.Abs(m_Position.Row - position.Row) == 2)
+                {
+                    newPositionAfterEating = position;
+                    break;
+                }
+            }
+
+            return newPositionAfterEating;
         }
     }
 }

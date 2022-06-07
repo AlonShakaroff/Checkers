@@ -1,63 +1,30 @@
 ﻿using System.Collections.Generic;
 
-namespace CheckersLogicEngine
+namespace CheckersEngine
 {
     public class Player
     {
         //-------------------------------------------------------------------------------Members-------------------------------------------------------------------------------//
         private readonly int r_InitialStoneAmount;
-        private readonly List<GamePiece> r_GamePiecesList;
-        private readonly string r_PlayerName;
         private readonly bool r_IsPlayingFirst;
-        private int m_CurrentNumberOfStones;
-        private int m_WinningPoints;
 
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
-        public int NumberOfGamePiecesLeft
-        {
-            get 
-            {
-                return m_CurrentNumberOfStones;
-            }
-        }
+        public int NumberOfGamePiecesLeft { get; private set; }
 
-        public int WinningPoints
-        {
-            get 
-            {
-                return m_WinningPoints;
-            }
+        public int WinningPoints { get; set; }
 
-            set
-            {
-                m_WinningPoints = value;
-            }
-        }
+        public string Name { get; }
 
-        public string Name
-        { 
-            get
-            {
-                return r_PlayerName; 
-            }
-        }
-
-        public List<GamePiece> GamePieces
-        {
-            get 
-            {
-                return r_GamePiecesList;
-            }
-        }
+        public List<GamePiece> GamePieces { get; }
 
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
         public Player(string i_PlayerName, int i_NumberOfGamePieces, bool i_IsThePlayerPlayingFirst, int i_NumberOfRowsOnTheGameBoard)
         {
-            r_PlayerName = i_PlayerName;
-            r_GamePiecesList = new List<GamePiece>(i_NumberOfGamePieces);
+            Name = i_PlayerName;
+            GamePieces = new List<GamePiece>(i_NumberOfGamePieces);
             r_InitialStoneAmount = i_NumberOfGamePieces;
             r_IsPlayingFirst = i_IsThePlayerPlayingFirst;
-            m_WinningPoints = 0;
+            WinningPoints = 0;
 
             InitializeGamePiecesPositions(i_NumberOfRowsOnTheGameBoard);
         }
@@ -71,11 +38,11 @@ namespace CheckersLogicEngine
             char pawnSymbol = r_IsPlayingFirst ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
             GamePiece.ePlayerProperty playerProperty = r_IsPlayingFirst ? GamePiece.ePlayerProperty.Player1 : GamePiece.ePlayerProperty.Player2;
 
-            m_CurrentNumberOfStones = r_InitialStoneAmount;
-            r_GamePiecesList.Clear();
+            NumberOfGamePiecesLeft = r_InitialStoneAmount;
+            GamePieces.Clear();
             for (int pieceCounter = 0; pieceCounter < r_InitialStoneAmount; ++pieceCounter)
             {
-                r_GamePiecesList.Add(new GamePiece(pawnSymbol, currentGamePiecePosition, playerProperty));
+                GamePieces.Add(new GamePiece(pawnSymbol, currentGamePiecePosition, playerProperty));
                 calculateTheStartingPositionOfTheNextGamePiece(pieceCounter + 1, ref currentRow, ref currentColumn, out currentGamePiecePosition, numberOfGamePiecesInARow);
             }
         }
@@ -115,9 +82,9 @@ namespace CheckersLogicEngine
         {
             int calculatedPoints = 0;
 
-            foreach(GamePiece currentGamePiece in r_GamePiecesList)
+            foreach(GamePiece currentGamePiece in GamePieces)
             {
-                if(currentGamePiece.IsKing == true)
+                if(currentGamePiece.IsKing)
                 {
                     calculatedPoints += GamePiece.k_PointsForAKing;
                 }
@@ -165,7 +132,7 @@ namespace CheckersLogicEngine
         {
             bool thePlayerHasPossibleMoves = false;
 
-            foreach(GamePiece currentGamePiece in r_GamePiecesList)
+            foreach(GamePiece currentGamePiece in GamePieces)
             {
                 if (currentGamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
                 {
@@ -186,7 +153,7 @@ namespace CheckersLogicEngine
 
         public void ClearPlayersPossibleMoves()
         {
-            foreach (GamePiece currentGamePiece in r_GamePiecesList)
+            foreach (GamePiece currentGamePiece in GamePieces)
             {
                 currentGamePiece.ClearGamePiecePossibleMoves();
             }
@@ -194,8 +161,8 @@ namespace CheckersLogicEngine
 
         public void DeleteAGamePieceFromGamePiecesList(GamePiece i_DeletedGamePiece)
         {
-            r_GamePiecesList.Remove(i_DeletedGamePiece);
-            m_CurrentNumberOfStones--;
+            GamePieces.Remove(i_DeletedGamePiece);
+            NumberOfGamePiecesLeft--;
         }
     }
 }

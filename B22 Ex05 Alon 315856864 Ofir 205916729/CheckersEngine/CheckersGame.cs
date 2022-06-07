@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CheckersLogicEngine
+namespace CheckersEngine
 {
     public class CheckersGame
     {
@@ -33,8 +33,6 @@ namespace CheckersLogicEngine
                 Position.eDirection.UpRight
             };
 
-        private readonly Player r_Player1;
-        private readonly Player r_Player2;
         private Player m_PlayerThatItIsItsTurn;
         private Player m_PlayerThatItIsNotItsTurn;
         private readonly GameBoard r_GameBoard;
@@ -54,16 +52,16 @@ namespace CheckersLogicEngine
             bool i_IsPVP
             )
         {
-            r_Player1 = new Player(i_FirstPlayerName, i_NumberOfGamePiecesPerPlayer, true, i_NumberOfRowsOnTheBoard);
-            r_Player2 = new Player(i_SecondPlayerName, i_NumberOfGamePiecesPerPlayer, false, i_NumberOfRowsOnTheBoard);
-            r_GameBoard = new GameBoard(i_NumberOfRowsOnTheBoard, i_NumberOfColumnsOnTheBoard, r_Player1.GamePieces, r_Player2.GamePieces);
+            Player1 = new Player(i_FirstPlayerName, i_NumberOfGamePiecesPerPlayer, true, i_NumberOfRowsOnTheBoard);
+            Player2 = new Player(i_SecondPlayerName, i_NumberOfGamePiecesPerPlayer, false, i_NumberOfRowsOnTheBoard);
+            r_GameBoard = new GameBoard(i_NumberOfRowsOnTheBoard, i_NumberOfColumnsOnTheBoard, Player1.GamePieces, Player2.GamePieces);
             m_WinnerOfTheGame = null;
             r_IsPVP = i_IsPVP;
             m_APieceWasEaten = false;
             m_EatingIsPossibleThisTurn = false;
             m_GameStatus = eGameStatus.OnGoing;
-            m_PlayerThatItIsNotItsTurn = r_Player2;
-            m_PlayerThatItIsItsTurn = r_Player1;
+            m_PlayerThatItIsNotItsTurn = Player2;
+            m_PlayerThatItIsItsTurn = Player1;
         }
 
         //-------------------------------------------------------------------------------Properties----------------------------------------------------------------------------//
@@ -94,21 +92,9 @@ namespace CheckersLogicEngine
             }
         }
 
-        public Player Player1
-        {
-            get
-            {
-                return r_Player1;
-            }
-        }
+        public Player Player1 { get; }
 
-        public Player Player2
-        {
-            get
-            {
-                return r_Player2;
-            }
-        }
+        public Player Player2 { get; }
 
         //-------------------------------------------------------------------------------Getters-------------------------------------------------------------------------------//
         public string GetTheNameOfThePlayerWhoCurrentlyPlaying()
@@ -123,7 +109,7 @@ namespace CheckersLogicEngine
 
         public char GetTheSymbolOfTheGamePiecesThatBelongsToThePlayingPlayer()
         {
-            return m_PlayerThatItIsItsTurn == r_Player1 ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
+            return m_PlayerThatItIsItsTurn == Player1 ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
         }
 
         public int GetTheNumberOfRowsInTheGameBoard()
@@ -144,8 +130,8 @@ namespace CheckersLogicEngine
         //-------------------------------------------------------------------------------Setters-------------------------------------------------------------------------------//
         private void setTheWinnerOfTheGameAndAddWinningPoints()
         {
-            int calculatedGamePiecesPointsOfPlayer1 = r_Player1.CalculateGamePiecesPoints();
-            int calculatedGamePiecesPointsOfPlayer2 = r_Player2.CalculateGamePiecesPoints();
+            int calculatedGamePiecesPointsOfPlayer1 = Player1.CalculateGamePiecesPoints();
+            int calculatedGamePiecesPointsOfPlayer2 = Player2.CalculateGamePiecesPoints();
             int winningPoints = Math.Abs(calculatedGamePiecesPointsOfPlayer1 - calculatedGamePiecesPointsOfPlayer2);
 
             m_PlayerThatItIsItsTurn.WinningPoints += winningPoints;
@@ -165,12 +151,12 @@ namespace CheckersLogicEngine
 
         public bool CheckIfThePlayerWhoCurrentlyPlayingIsPlayer1()
         {
-            return m_PlayerThatItIsItsTurn == r_Player1;
+            return m_PlayerThatItIsItsTurn == Player1;
         }
 
         public bool CheckIfThePlayerWhoCurrentlyPlayingIsAComputer()
         {
-            return r_IsPVP == false && m_PlayerThatItIsItsTurn == r_Player2;
+            return r_IsPVP == false && m_PlayerThatItIsItsTurn == Player2;
         }
 
         public bool CheckIfThePositionIsInTheGameBoardBoundaries(Position i_Position)
@@ -180,7 +166,7 @@ namespace CheckersLogicEngine
 
         private void checkIfTheGameIsOver()
         {
-            if (r_Player1.CheckIfThePlayerHasAnyPossibleMoves() == false && r_Player2.CheckIfThePlayerHasAnyPossibleMoves() == false)
+            if (Player1.CheckIfThePlayerHasAnyPossibleMoves() == false && Player2.CheckIfThePlayerHasAnyPossibleMoves() == false)
             {
                 m_GameStatus = eGameStatus.Draw;
             }
@@ -229,7 +215,7 @@ namespace CheckersLogicEngine
             eatARivalGamePieceIfNecessary(i_CurrentPosition, i_NewPosition);
             r_GameBoard.MoveAGamePieceToANewPosition(i_CurrentPosition, i_NewPosition);
             checkIfTheGamePieceNeedsToBecomeAKingAndMakeItAKingIfNecessary(gamePiecePlayed, i_NewPosition);
-            generateNewPossibleMovesForBothPlayers();
+            GenerateNewPossibleMovesForBothPlayers();
             checkIfTheGameIsOver();
             if (m_APieceWasEaten)
             {
@@ -277,11 +263,10 @@ namespace CheckersLogicEngine
             m_PlayerThatItIsNotItsTurn = temp;
         }
 
-        // $G$ CSS-999 (-5) Public methods should start with an uppercase letter
-        public void generateNewPossibleMovesForBothPlayers()
+        public void GenerateNewPossibleMovesForBothPlayers()
         {
-            generateNewPossibleMovesForAPlayer(r_Player1);
-            generateNewPossibleMovesForAPlayer(r_Player2);
+            generateNewPossibleMovesForAPlayer(Player1);
+            generateNewPossibleMovesForAPlayer(Player2);
         }
 
         private void generateNewPossibleMovesForAPlayer(Player i_Player)
@@ -292,11 +277,11 @@ namespace CheckersLogicEngine
             i_Player.ClearPlayersPossibleMoves();
             foreach (GamePiece currentGamePiece in i_Player.GamePieces)
             {
-                if (currentGamePiece.IsKing == true)
+                if (currentGamePiece.IsKing)
                 {
                     currentDirectionsList = sr_FullDirectionsList;
                 }
-                else if (i_Player.CheckIfThePlayerIsPlayingFirst() == true)
+                else if (i_Player.CheckIfThePlayerIsPlayingFirst())
                 {
                     currentDirectionsList = sr_UpwardsDirectionsList;
                 }
@@ -313,7 +298,7 @@ namespace CheckersLogicEngine
         {
             char playerSymbol;
 
-            if(m_PlayerThatItIsItsTurn == r_Player1)
+            if(m_PlayerThatItIsItsTurn == Player1)
             {
                 playerSymbol = GamePiece.k_FirstPlayerPawnSymbol;
             }
@@ -334,13 +319,13 @@ namespace CheckersLogicEngine
             {
                 currentPossiblePossitionInRelativeDirection =
                     i_GamePiece.Position.GetThePositionLocatedInTheDirectionRelativeToThisPosition(currentCheckedDirection);
-                if (r_GameBoard.CheckIfThePositionIsInTheBoardBoundaries(currentPossiblePossitionInRelativeDirection) == true)
+                if (r_GameBoard.CheckIfThePositionIsInTheBoardBoundaries(currentPossiblePossitionInRelativeDirection))
                 {
-                    if (r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(currentPossiblePossitionInRelativeDirection) == true)
+                    if (r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(currentPossiblePossitionInRelativeDirection))
                     {
                         currentPossibleEatingPositionInRelativeDirection =
                             currentPossiblePossitionInRelativeDirection.GetThePositionLocatedInTheDirectionRelativeToThisPosition(currentCheckedDirection);
-                        if (CheckIfThePieceOnThePositionIsEdible(i_GamePiece, currentPossiblePossitionInRelativeDirection,currentPossibleEatingPositionInRelativeDirection) == true)
+                        if (CheckIfThePieceOnThePositionIsEdible(i_GamePiece, currentPossiblePossitionInRelativeDirection,currentPossibleEatingPositionInRelativeDirection))
                         {
                             if(m_EatingIsPossibleThisTurn == false)
                             {
@@ -365,7 +350,7 @@ namespace CheckersLogicEngine
             bool theOtherGamePieceBelongsToTheSamePlayer, thePositionAfterTheEatingHasAGamePieceOnIt;
             bool ediable = false;
 
-            if (thePositionAfterEatingIsInTheBoardBoundaries == true)
+            if (thePositionAfterEatingIsInTheBoardBoundaries)
             {
                 theOtherGamePieceBelongsToTheSamePlayer = r_GameBoard.GetTheGamePieceOnRequestedPosition(i_EatingPosition).PlayerProperty.Equals(i_PlayingGamePiece.PlayerProperty);
                 thePositionAfterTheEatingHasAGamePieceOnIt = r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(i_AfterEatingPosition);
@@ -395,7 +380,7 @@ namespace CheckersLogicEngine
 
             foreach (GamePiece currentGamePiece in m_PlayerThatItIsItsTurn.GamePieces)
             {
-                if(currentGamePiece.CheckIfTheGamePieceHasAnyPossibleMoves() == true)
+                if(currentGamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
                 {
                     gamePiecesWithPossibleMoves.Add(currentGamePiece);
                 }
@@ -412,12 +397,12 @@ namespace CheckersLogicEngine
         {
             m_GameStatus = eGameStatus.OnGoing;
             m_WinnerOfTheGame = null;
-            m_PlayerThatItIsNotItsTurn = r_Player2;
-            m_PlayerThatItIsItsTurn = r_Player1;
-            r_Player1.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
-            r_Player2.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
-            r_GameBoard.PrepareTheBoardForANewGame(r_Player1.GamePieces, r_Player2.GamePieces);
-            generateNewPossibleMovesForBothPlayers();
+            m_PlayerThatItIsNotItsTurn = Player2;
+            m_PlayerThatItIsItsTurn = Player1;
+            Player1.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
+            Player2.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
+            r_GameBoard.PrepareTheBoardForANewGame(Player1.GamePieces, Player2.GamePieces);
+            GenerateNewPossibleMovesForBothPlayers();
         }
 
         public void FinishTheGame()

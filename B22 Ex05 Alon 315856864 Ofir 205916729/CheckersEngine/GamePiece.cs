@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CheckersLogicEngine
+namespace CheckersEngine
 {
     public class GamePiece
     {
@@ -18,96 +18,56 @@ namespace CheckersLogicEngine
         public const char k_SecondPlayerKingSymbol = 'U';
         public const int k_PointsForAKing = 4;
         public const int k_PointsForAPawn = 1;
-        private bool m_IsKing;
-        private char m_Symbol;
-        private Position m_Position;
-        private readonly List<Position> r_PossibleMoves;
-        private readonly ePlayerProperty r_PlayerProperty;
 
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
-        public char Symbol
-        {
-            get 
-            {
-                return m_Symbol; 
-            }
-        }
+        public char Symbol { get; private set; }
 
-        public bool IsKing
-        {
-            get 
-            { 
-                return m_IsKing; 
-            }
-        }
+        public bool IsKing { get; private set; }
 
-        public ePlayerProperty PlayerProperty
-        {
-            get 
-            {
-                return r_PlayerProperty; 
-            }
-        }
+        public ePlayerProperty PlayerProperty { get; }
 
-        public Position Position
-        {
-            get 
-            { 
-                return m_Position; 
-            }
+        public Position Position { get; set; }
 
-            set 
-            {
-                m_Position = value;
-            }
-        }
-
-        public List<Position> PossibleMoves
-        {
-            get 
-            { 
-                return r_PossibleMoves;
-            }
-        }
+        public List<Position> PossibleMoves { get; }
 
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
         public GamePiece(char i_Symbol, Position i_Position, ePlayerProperty i_PlayerProperty)
         {
-            m_IsKing = false;
-            m_Symbol = i_Symbol;
-            m_Position = i_Position;
-            r_PossibleMoves = new List<Position>();
-            r_PlayerProperty = i_PlayerProperty;
+            IsKing = false;
+            Symbol = i_Symbol;
+            Position = i_Position;
+            PossibleMoves = new List<Position>();
+            PlayerProperty = i_PlayerProperty;
         }
 
         //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
         public void MakeThePawnAKing()
         {
-            m_IsKing = true;
+            IsKing = true;
 
-            m_Symbol = m_Symbol == k_FirstPlayerPawnSymbol ? k_FirstPlayerKingSymbol : k_SecondPlayerKingSymbol;
+            Symbol = Symbol == k_FirstPlayerPawnSymbol ? k_FirstPlayerKingSymbol : k_SecondPlayerKingSymbol;
         }
 
         public void AddPossibleMove(Position i_NewPossibleMovePosition)
         {
-            r_PossibleMoves.Add(i_NewPossibleMovePosition);
+            PossibleMoves.Add(i_NewPossibleMovePosition);
         }
 
         public bool CheckIfTheGamePieceHasAnyPossibleMoves()
         {
-            return r_PossibleMoves.Count != 0;
+            return PossibleMoves.Count != 0;
         }
 
         public void ClearGamePiecePossibleMoves()
         {
-            r_PossibleMoves.Clear();
+            PossibleMoves.Clear();
         }
 
         public bool CheckIfThePositionIsAPossibleMove(Position i_Position)
         {
             bool validMove = false;
 
-            foreach(Position currentPossibleMove in r_PossibleMoves)
+            foreach(Position currentPossibleMove in PossibleMoves)
             {
                 if(currentPossibleMove.Equals(i_Position))
                 {
@@ -123,9 +83,9 @@ namespace CheckersLogicEngine
         {
             Position newPositionAfterEating = null;
 
-            foreach(Position position in r_PossibleMoves)
+            foreach(Position position in PossibleMoves)
             {
-                if(Math.Abs(m_Position.Row - position.Row) == 2)
+                if(Math.Abs(Position.Row - position.Row) == 2)
                 {
                     newPositionAfterEating = position;
                     break;

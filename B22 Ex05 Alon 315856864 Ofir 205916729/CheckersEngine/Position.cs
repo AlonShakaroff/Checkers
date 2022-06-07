@@ -1,8 +1,7 @@
-﻿namespace CheckersLogicEngine
+﻿namespace CheckersEngine
 {
     public class Position
     {
-        
         public enum eDirection
         {
             DownLeft,
@@ -11,41 +10,15 @@
             UpRight,
         }
 
-        //-------------------------------------------------------------------------------Members-------------------------------------------------------------------------------//
-        private int m_Row;
-        private int m_Column;
-
         //------------------------------------------------------------------------------Properties-----------------------------------------------------------------------------//
-        public int Row
-        {
-            get 
-            {
-                return m_Row;
-            }
+        public int Row { get; set; }
 
-            set
-            {
-                m_Row = value; 
-            }
-        }
-
-        public int Column
-        {
-            get
-            {
-                return m_Column; 
-            }
-
-            set
-            {
-                m_Column = value; 
-            }
-        }
+        public int Column { get; set; }
 
         public Position(int i_Row, int i_Column)
         {
-            m_Row = i_Row;
-            m_Column = i_Column;
+            Row = i_Row;
+            Column = i_Column;
         }
 
         public Position GetThePositionLocatedInTheDirectionRelativeToThisPosition(eDirection i_RequestedDirection)
@@ -55,16 +28,16 @@
             switch(i_RequestedDirection)
             {
                 case eDirection.DownLeft:
-                    requestedPosition = new Position(m_Row + 1, m_Column - 1);
+                    requestedPosition = new Position(Row + 1, Column - 1);
                     break;
                 case eDirection.DownRight:
-                    requestedPosition = new Position(m_Row + 1, m_Column + 1);
+                    requestedPosition = new Position(Row + 1, Column + 1);
                     break;
                 case eDirection.UpLeft:
-                    requestedPosition = new Position(m_Row - 1, m_Column - 1);
+                    requestedPosition = new Position(Row - 1, Column - 1);
                     break;
                 case eDirection.UpRight:
-                    requestedPosition = new Position(m_Row - 1, m_Column + 1);
+                    requestedPosition = new Position(Row - 1, Column + 1);
                     break;
             }
 
@@ -82,7 +55,7 @@
             else
             {
                 Position position = (Position)i_Object;
-                equals = (m_Row == position.Row) && (m_Column == position.Column);
+                equals = (Row == position.Row) && (Column == position.Column);
             }
 
             return equals;
@@ -90,7 +63,7 @@
 
         public override string ToString()
         {
-            return $"({m_Row},{m_Column})";
+            return $"({Row},{Column})";
         }
     }
 }

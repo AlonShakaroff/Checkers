@@ -1,4 +1,4 @@
-﻿namespace CheckersLogicEngine
+﻿namespace CheckersEngine
 {
     public class BoardCell
     {

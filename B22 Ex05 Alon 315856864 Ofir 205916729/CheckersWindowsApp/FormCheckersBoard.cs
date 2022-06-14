@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace CheckersWindowsApp
 {
-    public partial class CheckersBoard : Form
+    public partial class FormCheckersBoard : Form
     {
-        public CheckersBoard()
+        public FormCheckersBoard()
         {
             InitializeComponent();
         }
@@ -27,6 +27,11 @@ namespace CheckersWindowsApp
         }
 
         private void PlayerOneLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PlayerTwoLabel_Click(object sender, EventArgs e)
         {
 
         }

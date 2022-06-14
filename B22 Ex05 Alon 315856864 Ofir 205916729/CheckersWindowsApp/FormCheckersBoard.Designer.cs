@@ -1,6 +1,6 @@
 ﻿namespace CheckersWindowsApp
 {
-    partial class CheckersBoard
+    partial class FormCheckersBoard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckersBoard));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCheckersBoard));
             this.PlayerTwoPanel = new System.Windows.Forms.Panel();
+            this.PlayerTwoLabel = new System.Windows.Forms.Label();
             this.PlayerOnePanel = new System.Windows.Forms.Panel();
             this.PlayerOneLabel = new System.Windows.Forms.Label();
-            this.PlayerTwoLabel = new System.Windows.Forms.Label();
             this.PlayerTwoPanel.SuspendLayout();
             this.PlayerOnePanel.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +48,18 @@
             this.PlayerTwoPanel.Size = new System.Drawing.Size(203, 69);
             this.PlayerTwoPanel.TabIndex = 0;
             this.PlayerTwoPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // PlayerTwoLabel
+            // 
+            this.PlayerTwoLabel.AutoSize = true;
+            this.PlayerTwoLabel.Font = new System.Drawing.Font("Stencil", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlayerTwoLabel.ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.PlayerTwoLabel.Location = new System.Drawing.Point(32, 26);
+            this.PlayerTwoLabel.Name = "PlayerTwoLabel";
+            this.PlayerTwoLabel.Size = new System.Drawing.Size(157, 33);
+            this.PlayerTwoLabel.TabIndex = 1;
+            this.PlayerTwoLabel.Text = "Player 2: ";
+            this.PlayerTwoLabel.Click += new System.EventHandler(this.PlayerTwoLabel_Click);
             // 
             // PlayerOnePanel
             // 
@@ -69,15 +81,6 @@
             this.PlayerOneLabel.TabIndex = 0;
             this.PlayerOneLabel.Text = "Player 1";
             this.PlayerOneLabel.Click += new System.EventHandler(this.PlayerOneLabel_Click);
-            // 
-            // PlayerTwoLabel
-            // 
-            this.PlayerTwoLabel.AutoSize = true;
-            this.PlayerTwoLabel.Location = new System.Drawing.Point(29, 26);
-            this.PlayerTwoLabel.Name = "PlayerTwoLabel";
-            this.PlayerTwoLabel.Size = new System.Drawing.Size(56, 16);
-            this.PlayerTwoLabel.TabIndex = 1;
-            this.PlayerTwoLabel.Text = "Player 2";
             // 
             // CheckersBoard
             // 

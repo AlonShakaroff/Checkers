@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace CheckersWindowsApp
 {
-    public partial class GameSettings : Form
+    public partial class FormGameSettings : Form
     {
-        public GameSettings()
+        public FormGameSettings()
         {
             InitializeComponent();
         }

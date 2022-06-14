@@ -32,17 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CheckersBoard.cs">
+    <Compile Include="FormCheckersBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CheckersBoard.Designer.cs">
-      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    <Compile Include="FormCheckersBoard.Designer.cs">
+      <DependentUpon>FormCheckersBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSettings.cs">
+    <Compile Include="FormGameSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameSettings.Designer.cs">
-      <DependentUpon>GameSettings.cs</DependentUpon>
+    <Compile Include="FormGameSettings.Designer.cs">
+      <DependentUpon>FormGameSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -58,8 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CheckersBoard.resx">
-      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    <EmbeddedResource Include="FormCheckersBoard.resx">
+      <DependentUpon>FormCheckersBoard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

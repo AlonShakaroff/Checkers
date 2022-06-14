@@ -1,7 +1,7 @@
 ﻿
 namespace CheckersWindowsApp
 {
-    partial class GameSettings
+    partial class FormGameSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace CheckersWindowsApp
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGameSettings));
             this.labelFirstPlayersName = new System.Windows.Forms.Label();
             this.labelSecondPlayersName = new System.Windows.Forms.Label();
             this.textBoxFirstPlayersName = new System.Windows.Forms.TextBox();

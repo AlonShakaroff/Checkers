@@ -5,6 +5,11 @@ namespace CheckersWindowsApp
 {
     public partial class FormGameSettings : Form
     {
+        private string m_FirstPlayerName;
+        private string m_SecondPlayerName;
+        private int m_BoardSize;
+        private bool m_IsSecondPlayerAComputer;
+
         public FormGameSettings()
         {
             InitializeComponent();
@@ -96,7 +101,7 @@ namespace CheckersWindowsApp
 
         private void StartTheGame()
         {
-            CheckersBoard checkers = new CheckersBoard();
+            FormCheckersBoard checkers = new FormCheckersBoard();
 
             this.Hide();
             checkers.ShowDialog();

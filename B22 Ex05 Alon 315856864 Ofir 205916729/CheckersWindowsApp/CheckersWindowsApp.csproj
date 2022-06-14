@@ -34,6 +34,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Application Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="FormCheckersBoard.cs">
       <SubType>Form</SubType>
@@ -78,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\dark-wood-label.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Application Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

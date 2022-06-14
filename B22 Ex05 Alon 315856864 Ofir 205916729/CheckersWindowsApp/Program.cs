@@ -10,7 +10,7 @@ namespace CheckersWindowsApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameSettings());
+            Application.Run(new FormGameSettings());
         }
     }
 }

@@ -32,11 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CheckersBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckersBoard.Designer.cs">
+      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameSettings.Designer.cs">
       <DependentUpon>GameSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +56,24 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CheckersBoard.resx">
+      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dark wood texture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wood-label.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dark-wood-label.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCheckersBoard));
             this.PlayerTwoPanel = new System.Windows.Forms.Panel();
+            this.LabelPlayerTwoScore = new System.Windows.Forms.Label();
             this.LabelPlayerTwo = new System.Windows.Forms.Label();
             this.PlayerOnePanel = new System.Windows.Forms.Panel();
-            this.LabelPlayerOne = new System.Windows.Forms.Label();
-            this.LabelPlayerTwoScore = new System.Windows.Forms.Label();
             this.LabelPlayerOneScore = new System.Windows.Forms.Label();
+            this.LabelPlayerOne = new System.Windows.Forms.Label();
             this.PlayerTwoPanel.SuspendLayout();
             this.PlayerOnePanel.SuspendLayout();
             this.SuspendLayout();
@@ -46,23 +46,33 @@
             this.PlayerTwoPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PlayerTwoPanel.Controls.Add(this.LabelPlayerTwoScore);
             this.PlayerTwoPanel.Controls.Add(this.LabelPlayerTwo);
-            this.PlayerTwoPanel.Location = new System.Drawing.Point(367, 12);
+            this.PlayerTwoPanel.Location = new System.Drawing.Point(413, 15);
+            this.PlayerTwoPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PlayerTwoPanel.Name = "PlayerTwoPanel";
-            this.PlayerTwoPanel.Size = new System.Drawing.Size(203, 69);
+            this.PlayerTwoPanel.Size = new System.Drawing.Size(228, 86);
             this.PlayerTwoPanel.TabIndex = 0;
-            this.PlayerTwoPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // LabelPlayerTwoScore
+            // 
+            this.LabelPlayerTwoScore.AutoSize = true;
+            this.LabelPlayerTwoScore.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelPlayerTwoScore.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LabelPlayerTwoScore.Location = new System.Drawing.Point(159, 32);
+            this.LabelPlayerTwoScore.Name = "LabelPlayerTwoScore";
+            this.LabelPlayerTwoScore.Size = new System.Drawing.Size(31, 33);
+            this.LabelPlayerTwoScore.TabIndex = 2;
+            this.LabelPlayerTwoScore.Text = "0";
             // 
             // LabelPlayerTwo
             // 
             this.LabelPlayerTwo.AutoSize = true;
             this.LabelPlayerTwo.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelPlayerTwo.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LabelPlayerTwo.Location = new System.Drawing.Point(20, 26);
+            this.LabelPlayerTwo.Location = new System.Drawing.Point(22, 32);
             this.LabelPlayerTwo.Name = "LabelPlayerTwo";
-            this.LabelPlayerTwo.Size = new System.Drawing.Size(128, 27);
+            this.LabelPlayerTwo.Size = new System.Drawing.Size(157, 33);
             this.LabelPlayerTwo.TabIndex = 1;
             this.LabelPlayerTwo.Text = "Player 2: ";
-            this.LabelPlayerTwo.Click += new System.EventHandler(this.PlayerTwoLabel_Click);
             // 
             // PlayerOnePanel
             // 
@@ -71,56 +81,46 @@
             this.PlayerOnePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PlayerOnePanel.Controls.Add(this.LabelPlayerOneScore);
             this.PlayerOnePanel.Controls.Add(this.LabelPlayerOne);
-            this.PlayerOnePanel.Location = new System.Drawing.Point(12, 12);
+            this.PlayerOnePanel.Location = new System.Drawing.Point(14, 15);
+            this.PlayerOnePanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PlayerOnePanel.Name = "PlayerOnePanel";
-            this.PlayerOnePanel.Size = new System.Drawing.Size(203, 69);
+            this.PlayerOnePanel.Size = new System.Drawing.Size(228, 86);
             this.PlayerOnePanel.TabIndex = 1;
-            // 
-            // LabelPlayerOne
-            // 
-            this.LabelPlayerOne.AutoSize = true;
-            this.LabelPlayerOne.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelPlayerOne.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LabelPlayerOne.Location = new System.Drawing.Point(17, 26);
-            this.LabelPlayerOne.Name = "LabelPlayerOne";
-            this.LabelPlayerOne.Size = new System.Drawing.Size(128, 27);
-            this.LabelPlayerOne.TabIndex = 2;
-            this.LabelPlayerOne.Text = "Player 1: ";
-            // 
-            // LabelPlayerTwoScore
-            // 
-            this.LabelPlayerTwoScore.AutoSize = true;
-            this.LabelPlayerTwoScore.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelPlayerTwoScore.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LabelPlayerTwoScore.Location = new System.Drawing.Point(141, 26);
-            this.LabelPlayerTwoScore.Name = "LabelPlayerTwoScore";
-            this.LabelPlayerTwoScore.Size = new System.Drawing.Size(25, 27);
-            this.LabelPlayerTwoScore.TabIndex = 2;
-            this.LabelPlayerTwoScore.Text = "0";
             // 
             // LabelPlayerOneScore
             // 
             this.LabelPlayerOneScore.AutoSize = true;
             this.LabelPlayerOneScore.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelPlayerOneScore.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LabelPlayerOneScore.Location = new System.Drawing.Point(141, 26);
+            this.LabelPlayerOneScore.Location = new System.Drawing.Point(159, 32);
             this.LabelPlayerOneScore.Name = "LabelPlayerOneScore";
-            this.LabelPlayerOneScore.Size = new System.Drawing.Size(25, 27);
+            this.LabelPlayerOneScore.Size = new System.Drawing.Size(31, 33);
             this.LabelPlayerOneScore.TabIndex = 3;
             this.LabelPlayerOneScore.Text = "0";
             // 
+            // LabelPlayerOne
+            // 
+            this.LabelPlayerOne.AutoSize = true;
+            this.LabelPlayerOne.Font = new System.Drawing.Font("Stencil", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelPlayerOne.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LabelPlayerOne.Location = new System.Drawing.Point(19, 32);
+            this.LabelPlayerOne.Name = "LabelPlayerOne";
+            this.LabelPlayerOne.Size = new System.Drawing.Size(157, 33);
+            this.LabelPlayerOne.TabIndex = 2;
+            this.LabelPlayerOne.Text = "Player 1: ";
+            // 
             // FormCheckersBoard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::CheckersWindowsApp.Properties.Resources.dark_wood_texture;
-            this.ClientSize = new System.Drawing.Size(582, 503);
+            this.ClientSize = new System.Drawing.Size(655, 629);
             this.Controls.Add(this.PlayerOnePanel);
             this.Controls.Add(this.PlayerTwoPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormCheckersBoard";
             this.Text = "CheckersBoard";
-            this.Load += new System.EventHandler(this.CheckersBoard_Load);
             this.PlayerTwoPanel.ResumeLayout(false);
             this.PlayerTwoPanel.PerformLayout();
             this.PlayerOnePanel.ResumeLayout(false);

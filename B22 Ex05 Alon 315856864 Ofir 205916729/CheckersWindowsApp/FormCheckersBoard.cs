@@ -12,7 +12,7 @@ namespace CheckersWindowsApp
         {
             InitializeComponent();
 
-            PlayerOneLabel.Text = i_FirstPlayerName;
+            LabelPlayerOne.Text = i_FirstPlayerName;
             LabelPlayerTwo.Text = i_SecondPlayerName;
             m_BoardSize = i_BoardSize;
             m_IsSecondPlayerAComputer = i_IsSecondPlayerAComputer;

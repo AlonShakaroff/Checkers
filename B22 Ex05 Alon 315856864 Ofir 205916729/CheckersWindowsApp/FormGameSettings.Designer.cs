@@ -187,7 +187,7 @@ namespace CheckersWindowsApp
             this.buttonStartGame.UseVisualStyleBackColor = true;
             this.buttonStartGame.Click += new System.EventHandler(this.buttonStartGame_Click);
             // 
-            // GameSettings
+            // FormGameSettings
             // 
             this.AcceptButton = this.buttonStartGame;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -197,8 +197,9 @@ namespace CheckersWindowsApp
             this.Controls.Add(this.groupBoxPlayersNames);
             this.Controls.Add(this.groupBoxBoardSize);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "GameSettings";
+            this.Name = "FormGameSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game Settings";
             this.groupBoxBoardSize.ResumeLayout(false);

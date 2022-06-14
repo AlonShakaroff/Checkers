@@ -11,7 +11,6 @@ namespace CheckersWindowsApp
         public FormCheckersBoard(string i_FirstPlayerName, string i_SecondPlayerName, int i_BoardSize, bool i_IsSecondPlayerAComputer)
         {
             InitializeComponent();
-
             PlayerOneLabel.Text = i_FirstPlayerName;
             PlayerTwoLabel.Text = i_SecondPlayerName;
             m_BoardSize = i_BoardSize;

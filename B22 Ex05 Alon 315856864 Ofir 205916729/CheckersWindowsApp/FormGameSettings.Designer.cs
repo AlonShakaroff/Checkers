@@ -30,10 +30,10 @@ namespace CheckersWindowsApp
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGameSettings));
-            this.labelFirstPlayersName = new System.Windows.Forms.Label();
-            this.labelSecondPlayersName = new System.Windows.Forms.Label();
-            this.textBoxFirstPlayersName = new System.Windows.Forms.TextBox();
-            this.textBoxSecondPlayersName = new System.Windows.Forms.TextBox();
+            this.labelPlayerOneName = new System.Windows.Forms.Label();
+            this.labelPlayerTwoName = new System.Windows.Forms.Label();
+            this.textBoxPlayerOneName = new System.Windows.Forms.TextBox();
+            this.textBoxPlayerTwoName = new System.Windows.Forms.TextBox();
             this.radioButton6x6 = new System.Windows.Forms.RadioButton();
             this.radioButton10x10 = new System.Windows.Forms.RadioButton();
             this.radioButton8x8 = new System.Windows.Forms.RadioButton();
@@ -46,43 +46,43 @@ namespace CheckersWindowsApp
             this.groupBoxPlayersNames.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelFirstPlayersName
+            // labelPlayerOneName
             // 
-            this.labelFirstPlayersName.AutoSize = true;
-            this.labelFirstPlayersName.Location = new System.Drawing.Point(36, 40);
-            this.labelFirstPlayersName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelFirstPlayersName.Name = "labelFirstPlayersName";
-            this.labelFirstPlayersName.Size = new System.Drawing.Size(145, 20);
-            this.labelFirstPlayersName.TabIndex = 0;
-            this.labelFirstPlayersName.Text = "First player\'s name:";
+            this.labelPlayerOneName.AutoSize = true;
+            this.labelPlayerOneName.Location = new System.Drawing.Point(36, 40);
+            this.labelPlayerOneName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPlayerOneName.Name = "labelPlayerOneName";
+            this.labelPlayerOneName.Size = new System.Drawing.Size(145, 20);
+            this.labelPlayerOneName.TabIndex = 0;
+            this.labelPlayerOneName.Text = "First player\'s name:";
             // 
-            // labelSecondPlayersName
+            // labelPlayerTwoName
             // 
-            this.labelSecondPlayersName.AutoSize = true;
-            this.labelSecondPlayersName.Location = new System.Drawing.Point(36, 122);
-            this.labelSecondPlayersName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelSecondPlayersName.Name = "labelSecondPlayersName";
-            this.labelSecondPlayersName.Size = new System.Drawing.Size(169, 20);
-            this.labelSecondPlayersName.TabIndex = 1;
-            this.labelSecondPlayersName.Text = "Second player\'s name:";
+            this.labelPlayerTwoName.AutoSize = true;
+            this.labelPlayerTwoName.Location = new System.Drawing.Point(36, 122);
+            this.labelPlayerTwoName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPlayerTwoName.Name = "labelPlayerTwoName";
+            this.labelPlayerTwoName.Size = new System.Drawing.Size(169, 20);
+            this.labelPlayerTwoName.TabIndex = 1;
+            this.labelPlayerTwoName.Text = "Second player\'s name:";
             // 
-            // textBoxFirstPlayersName
+            // textBoxPlayerOneName
             // 
-            this.textBoxFirstPlayersName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxFirstPlayersName.Location = new System.Drawing.Point(224, 35);
-            this.textBoxFirstPlayersName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxFirstPlayersName.Name = "textBoxFirstPlayersName";
-            this.textBoxFirstPlayersName.Size = new System.Drawing.Size(149, 26);
-            this.textBoxFirstPlayersName.TabIndex = 2;
+            this.textBoxPlayerOneName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPlayerOneName.Location = new System.Drawing.Point(224, 35);
+            this.textBoxPlayerOneName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxPlayerOneName.Name = "textBoxPlayerOneName";
+            this.textBoxPlayerOneName.Size = new System.Drawing.Size(149, 26);
+            this.textBoxPlayerOneName.TabIndex = 2;
             // 
-            // textBoxSecondPlayersName
+            // textBoxPlayerTwoName
             // 
-            this.textBoxSecondPlayersName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxSecondPlayersName.Location = new System.Drawing.Point(224, 117);
-            this.textBoxSecondPlayersName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxSecondPlayersName.Name = "textBoxSecondPlayersName";
-            this.textBoxSecondPlayersName.Size = new System.Drawing.Size(149, 26);
-            this.textBoxSecondPlayersName.TabIndex = 3;
+            this.textBoxPlayerTwoName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPlayerTwoName.Location = new System.Drawing.Point(224, 117);
+            this.textBoxPlayerTwoName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxPlayerTwoName.Name = "textBoxPlayerTwoName";
+            this.textBoxPlayerTwoName.Size = new System.Drawing.Size(149, 26);
+            this.textBoxPlayerTwoName.TabIndex = 3;
             // 
             // radioButton6x6
             // 
@@ -137,10 +137,10 @@ namespace CheckersWindowsApp
             // 
             this.groupBoxPlayersNames.Controls.Add(this.radioButtonAgainstComputer);
             this.groupBoxPlayersNames.Controls.Add(this.radioButtonAgainstHuman);
-            this.groupBoxPlayersNames.Controls.Add(this.labelFirstPlayersName);
-            this.groupBoxPlayersNames.Controls.Add(this.textBoxFirstPlayersName);
-            this.groupBoxPlayersNames.Controls.Add(this.textBoxSecondPlayersName);
-            this.groupBoxPlayersNames.Controls.Add(this.labelSecondPlayersName);
+            this.groupBoxPlayersNames.Controls.Add(this.labelPlayerOneName);
+            this.groupBoxPlayersNames.Controls.Add(this.textBoxPlayerOneName);
+            this.groupBoxPlayersNames.Controls.Add(this.textBoxPlayerTwoName);
+            this.groupBoxPlayersNames.Controls.Add(this.labelPlayerTwoName);
             this.groupBoxPlayersNames.Location = new System.Drawing.Point(18, 102);
             this.groupBoxPlayersNames.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxPlayersNames.Name = "groupBoxPlayersNames";
@@ -212,10 +212,10 @@ namespace CheckersWindowsApp
 
         #endregion
 
-        private System.Windows.Forms.Label labelFirstPlayersName;
-        private System.Windows.Forms.Label labelSecondPlayersName;
-        private System.Windows.Forms.TextBox textBoxFirstPlayersName;
-        private System.Windows.Forms.TextBox textBoxSecondPlayersName;
+        private System.Windows.Forms.Label labelPlayerOneName;
+        private System.Windows.Forms.Label labelPlayerTwoName;
+        private System.Windows.Forms.TextBox textBoxPlayerOneName;
+        private System.Windows.Forms.TextBox textBoxPlayerTwoName;
         private System.Windows.Forms.RadioButton radioButton6x6;
         private System.Windows.Forms.RadioButton radioButton10x10;
         private System.Windows.Forms.RadioButton radioButton8x8;

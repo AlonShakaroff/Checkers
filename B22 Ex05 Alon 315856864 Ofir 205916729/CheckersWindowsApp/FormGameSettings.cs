@@ -5,10 +5,10 @@ namespace CheckersWindowsApp
 {
     public partial class FormGameSettings : Form
     {
-        private string m_FirstPlayerName;
-        private string m_SecondPlayerName;
+        private string m_PlayerOneName;
+        private string m_PlayerTwoName;
         private int m_BoardSize;
-        private bool m_IsSecondPlayerAComputer;
+        private bool m_IsPlayerTwoAComputer;
 
         public FormGameSettings()
         {
@@ -17,7 +17,7 @@ namespace CheckersWindowsApp
 
         private void checkIfTheSecondPlayerIsAComputer()
         {
-            m_IsSecondPlayerAComputer = radioButtonAgainstComputer.Checked;
+            m_IsPlayerTwoAComputer = radioButtonAgainstComputer.Checked;
         }
 
         private void getChosenBoardSize()
@@ -38,8 +38,8 @@ namespace CheckersWindowsApp
 
         private void radioButtonAgainstComputer_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxSecondPlayersName.Text = "Computer";
-            textBoxSecondPlayersName.Enabled = false;
+            textBoxPlayerTwoName.Text = "Computer";
+            textBoxPlayerTwoName.Enabled = false;
         }
 
         private bool checkIfPlayersNameContainsNoneAlphabeticalCharacters(TextBox i_TextBox)
@@ -60,8 +60,8 @@ namespace CheckersWindowsApp
 
         private void radioButtonAgainstHuman_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxSecondPlayersName.Text = String.Empty;
-            textBoxSecondPlayersName.Enabled = true;
+            textBoxPlayerTwoName.Text = String.Empty;
+            textBoxPlayerTwoName.Enabled = true;
         }
 
         private void buttonStartGame_Click(object sender, EventArgs e)
@@ -87,21 +87,21 @@ namespace CheckersWindowsApp
 
         private void GatherGameSettings()
         {
-            m_FirstPlayerName = textBoxFirstPlayersName.Text;
-            m_SecondPlayerName = textBoxSecondPlayersName.Text;
+            m_PlayerOneName = textBoxPlayerOneName.Text;
+            m_PlayerTwoName = textBoxPlayerTwoName.Text;
             getChosenBoardSize();
             checkIfTheSecondPlayerIsAComputer();
         }
 
         private bool checkIfAnyPlayersNameContainNonAlphabeticalCharacter()
         {
-            return checkIfPlayersNameContainsNoneAlphabeticalCharacters(textBoxFirstPlayersName) 
-                || checkIfPlayersNameContainsNoneAlphabeticalCharacters(textBoxSecondPlayersName);
+            return checkIfPlayersNameContainsNoneAlphabeticalCharacters(textBoxPlayerOneName) 
+                || checkIfPlayersNameContainsNoneAlphabeticalCharacters(textBoxPlayerTwoName);
         }
 
         private void StartTheGame()
         {
-            FormCheckersBoard checkers = new FormCheckersBoard(m_FirstPlayerName, m_SecondPlayerName, m_BoardSize, m_IsSecondPlayerAComputer);
+            FormCheckersBoard checkers = new FormCheckersBoard(m_PlayerOneName, m_PlayerTwoName, m_BoardSize, m_IsPlayerTwoAComputer);
 
             this.Hide();
             checkers.ShowDialog();
@@ -109,12 +109,12 @@ namespace CheckersWindowsApp
 
         private bool CheckIfBothPlayersHaveTheSameName()
         {
-            return textBoxFirstPlayersName.Text.Equals(textBoxSecondPlayersName.Text);
+            return textBoxPlayerOneName.Text.Equals(textBoxPlayerTwoName.Text);
         }
 
         private bool checkIfAnyPlayersNameIsMissing()
         {
-            return textBoxFirstPlayersName.Text.Equals(String.Empty) || textBoxSecondPlayersName.Text.Equals(String.Empty);
+            return textBoxPlayerOneName.Text.Equals(String.Empty) || textBoxPlayerTwoName.Text.Equals(String.Empty);
         }
     }
 }

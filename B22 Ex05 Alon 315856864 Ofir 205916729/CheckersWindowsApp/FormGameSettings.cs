@@ -5,9 +5,13 @@ namespace CheckersWindowsApp
 {
     public partial class FormGameSettings : Form
     {
+        private const int k_AmountOfGamePiecesPerPlayerIn6X6Board = 6;
+        private const int k_AmountOfGamePiecesPerPlayerIn8X8Board = 12;
+        private const int k_AmountOfGamePiecesPerPlayerIn10X10Board = 20;
         private string m_PlayerOneName;
         private string m_PlayerTwoName;
         private int m_BoardSize;
+        private int m_NumberOfGamePiecesPerPlayer;
         private bool m_IsPlayerTwoAComputer;
 
         public FormGameSettings()
@@ -25,14 +29,17 @@ namespace CheckersWindowsApp
             if (radioButton6x6.Checked)
             {
                 m_BoardSize = 6;
+                m_NumberOfGamePiecesPerPlayer = k_AmountOfGamePiecesPerPlayerIn6X6Board;
             }
             else if (radioButton8x8.Checked)
             {
                 m_BoardSize = 8;
+                m_NumberOfGamePiecesPerPlayer = k_AmountOfGamePiecesPerPlayerIn8X8Board;
             }
             else
             {
                 m_BoardSize = 10;
+                m_NumberOfGamePiecesPerPlayer = k_AmountOfGamePiecesPerPlayerIn10X10Board;
             }
         }
 
@@ -60,7 +67,7 @@ namespace CheckersWindowsApp
 
         private void radioButtonAgainstHuman_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxPlayerTwoName.Text = String.Empty;
+            textBoxPlayerTwoName.Text = string.Empty;
             textBoxPlayerTwoName.Enabled = true;
         }
 
@@ -101,7 +108,12 @@ namespace CheckersWindowsApp
 
         private void StartTheGame()
         {
-            FormCheckersBoard checkers = new FormCheckersBoard(m_PlayerOneName, m_PlayerTwoName, m_BoardSize, m_IsPlayerTwoAComputer);
+            FormCheckersGame checkers = new FormCheckersGame(
+                m_PlayerOneName,
+                m_PlayerTwoName,
+                m_BoardSize,
+                m_NumberOfGamePiecesPerPlayer,
+                m_IsPlayerTwoAComputer);
 
             this.Hide();
             checkers.ShowDialog();
@@ -114,7 +126,7 @@ namespace CheckersWindowsApp
 
         private bool checkIfAnyPlayersNameIsMissing()
         {
-            return textBoxPlayerOneName.Text.Equals(String.Empty) || textBoxPlayerTwoName.Text.Equals(String.Empty);
+            return textBoxPlayerOneName.Text.Equals(string.Empty) || textBoxPlayerTwoName.Text.Equals(string.Empty);
         }
     }
 }

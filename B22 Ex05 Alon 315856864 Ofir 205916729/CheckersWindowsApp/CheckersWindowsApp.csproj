@@ -38,11 +38,11 @@
     <ApplicationIcon>Application Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FormCheckersBoard.cs">
+    <Compile Include="FormCheckersGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCheckersBoard.Designer.cs">
-      <DependentUpon>FormCheckersBoard.cs</DependentUpon>
+    <Compile Include="FormCheckersGame.Designer.cs">
+      <DependentUpon>FormCheckersGame.cs</DependentUpon>
     </Compile>
     <Compile Include="FormGameSettings.cs">
       <SubType>Form</SubType>
@@ -65,8 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormCheckersBoard.resx">
-      <DependentUpon>FormCheckersBoard.cs</DependentUpon>
+    <EmbeddedResource Include="FormCheckersGame.resx">
+      <DependentUpon>FormCheckersGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGameSettings.resx">
       <DependentUpon>FormGameSettings.cs</DependentUpon>
@@ -87,7 +87,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Application Icon.ico" />
+    <Content Include="Resources\black-king-on-tile.png" />
+    <None Include="Resources\black-king.png" />
+    <Content Include="Resources\black-pawn-on-tile.png" />
+    <None Include="Resources\black-pawn.png" />
+    <Content Include="Resources\dark-tile.png" />
+    <Content Include="Resources\white-king-on-tile.png" />
+    <None Include="Resources\white-king.png" />
+    <Content Include="Resources\white-pawn-on-tile.png" />
+    <None Include="Resources\white-pawn.png" />
+    <Content Include="Resources\white-tile.png" />
     <None Include="Resources\wood-label-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckersEngine\CheckersEngine.csproj">
+      <Project>{ba60453b-520d-4ca3-8478-38c78963fa84}</Project>
+      <Name>CheckersEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

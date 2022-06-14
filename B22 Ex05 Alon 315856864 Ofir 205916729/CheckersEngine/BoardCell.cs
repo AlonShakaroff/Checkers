@@ -1,4 +1,6 @@
-﻿namespace CheckersEngine
+﻿using System;
+
+namespace CheckersEngine
 {
     public class BoardCell
     {
@@ -18,9 +20,12 @@
             }
         }
 
+        public Position Position { get; private set; }
+
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
-        public BoardCell()
+        public BoardCell(Position i_Position)
         {
+            Position = i_Position;
             m_IsTaken = false;
             m_GamePiece = null;
         }

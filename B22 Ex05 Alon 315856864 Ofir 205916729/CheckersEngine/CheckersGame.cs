@@ -42,6 +42,12 @@ namespace CheckersEngine
         private bool m_EatingIsPossibleThisTurn;
         private bool m_APieceWasEaten;
 
+        public event Action TurnChanged;
+
+        public event Action<BoardCell, BoardCell> MoveMade;
+
+        public event Action<BoardCell> GamePieceWasEaten;
+
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
         public CheckersGame(
             string i_FirstPlayerName,
@@ -96,6 +102,14 @@ namespace CheckersEngine
 
         public Player Player2 { get; }
 
+        public GameBoard GameBoard 
+        {
+            get 
+            {
+                return r_GameBoard;
+            }
+        }
+
         //-------------------------------------------------------------------------------Getters-------------------------------------------------------------------------------//
         public string GetTheNameOfThePlayerWhoCurrentlyPlaying()
         {
@@ -105,11 +119,6 @@ namespace CheckersEngine
         public string GetTheNameOfThePlayerWhoCurrentlyNotPlaying()
         {
             return m_PlayerThatItIsNotItsTurn.Name;
-        }
-
-        public char GetTheSymbolOfTheGamePiecesThatBelongsToThePlayingPlayer()
-        {
-            return m_PlayerThatItIsItsTurn == Player1 ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
         }
 
         public int GetTheNumberOfRowsInTheGameBoard()
@@ -138,7 +147,7 @@ namespace CheckersEngine
             m_WinnerOfTheGame = m_PlayerThatItIsItsTurn.Name;
         }
 
-        public char GetTheSymbolOfTheGamePieceOnRequestedPosition(Position i_Position)
+        public GamePiece.eSymbol GetTheSymbolOfTheGamePieceOnRequestedPosition(Position i_Position)
         {
             return r_GameBoard.GetTheGamePieceOnRequestedPosition(i_Position).Symbol;
         }
@@ -228,6 +237,8 @@ namespace CheckersEngine
             {
                 SwitchPlayersTurns();
             }
+
+            MoveMade?.Invoke(r_GameBoard.Board[i_CurrentPosition.Row, i_CurrentPosition.Column], r_GameBoard.Board[i_NewPosition.Row, i_NewPosition.Column]);
         }
 
         private bool checkIfChainEatingIsPossibleAndPrepareNextTurnAccordingly(Position i_NewPosition)
@@ -259,8 +270,10 @@ namespace CheckersEngine
         public void SwitchPlayersTurns()
         {
             Player temp = m_PlayerThatItIsItsTurn;
+
             m_PlayerThatItIsItsTurn = m_PlayerThatItIsNotItsTurn;
             m_PlayerThatItIsNotItsTurn = temp;
+            TurnChanged?.Invoke();
         }
 
         public void GenerateNewPossibleMovesForBothPlayers()
@@ -292,22 +305,6 @@ namespace CheckersEngine
 
                 addPossibleMovesInRequestedDirections(currentGamePiece, currentDirectionsList, i_Player);
             }
-        }
-
-        public char GetTheSymbolOfThePlayerWhoCurrentlyPlaying()
-        {
-            char playerSymbol;
-
-            if(m_PlayerThatItIsItsTurn == Player1)
-            {
-                playerSymbol = GamePiece.k_FirstPlayerPawnSymbol;
-            }
-            else
-            {
-                playerSymbol = GamePiece.k_SecondPlayerPawnSymbol;
-            }
-
-            return playerSymbol;
         }
 
         private void addPossibleMovesInRequestedDirections(GamePiece i_GamePiece, List<Position.eDirection> i_RequestedDirectionsList, Player i_Player)
@@ -369,6 +366,7 @@ namespace CheckersEngine
 
             m_PlayerThatItIsNotItsTurn.DeleteAGamePieceFromGamePiecesList(eatenGamePiece);
             r_GameBoard.DeleteTheGamePieceOnRequestedPosition(eatenGamePiecePosition);
+            GamePieceWasEaten?.Invoke(r_GameBoard.Board[eatenGamePiecePosition.Row, eatenGamePiecePosition.Column]);
         }
 
         public void GetAMoveFromTheComputer(out Position o_CurrentPosition, out Position o_NewPosition)

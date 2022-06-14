@@ -35,7 +35,7 @@ namespace CheckersEngine
             int numberOfGamePiecesInARow = i_NumberOfRowsOnTheGameBoard / 2;
             Position currentGamePiecePosition = calculateTheStartingPositionOfTheGamePiecesDeployment(i_NumberOfRowsOnTheGameBoard);
             int currentRow = currentGamePiecePosition.Row, currentColumn = currentGamePiecePosition.Column;
-            char pawnSymbol = r_IsPlayingFirst ? GamePiece.k_FirstPlayerPawnSymbol : GamePiece.k_SecondPlayerPawnSymbol;
+            GamePiece.eSymbol pawnSymbol = r_IsPlayingFirst ? GamePiece.eSymbol.WhitePawn : GamePiece.eSymbol.BlackPawn;
             GamePiece.ePlayerProperty playerProperty = r_IsPlayingFirst ? GamePiece.ePlayerProperty.Player1 : GamePiece.ePlayerProperty.Player2;
 
             NumberOfGamePiecesLeft = r_InitialStoneAmount;

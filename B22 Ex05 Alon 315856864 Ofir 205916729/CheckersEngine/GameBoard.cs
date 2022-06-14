@@ -21,7 +21,7 @@ namespace CheckersEngine
             {
                 for (int j = 0; j < NumberOfColumns; ++j)
                 {
-                    Board[i, j] = new BoardCell();
+                    Board[i, j] = new BoardCell(new Position(i, j));
                 }
             }
 

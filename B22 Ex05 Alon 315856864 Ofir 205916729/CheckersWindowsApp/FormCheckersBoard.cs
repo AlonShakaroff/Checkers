@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace CheckersWindowsApp
 {
     public partial class FormCheckersBoard : Form
     {
-        public FormCheckersBoard()
+        private int m_BoardSize;
+        private bool m_IsSecondPlayerAComputer;
+
+        public FormCheckersBoard(string i_FirstPlayerName, string i_SecondPlayerName, int i_BoardSize, bool i_IsSecondPlayerAComputer)
         {
             InitializeComponent();
+
+            PlayerOneLabel.Text = i_FirstPlayerName;
+            PlayerTwoLabel.Text = i_SecondPlayerName;
+            m_BoardSize = i_BoardSize;
+            m_IsSecondPlayerAComputer = i_IsSecondPlayerAComputer;
         }
 
         private void CheckersBoard_Load(object sender, EventArgs e)

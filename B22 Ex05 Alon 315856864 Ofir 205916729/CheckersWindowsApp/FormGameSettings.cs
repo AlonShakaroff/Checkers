@@ -101,7 +101,7 @@ namespace CheckersWindowsApp
 
         private void StartTheGame()
         {
-            FormCheckersBoard checkers = new FormCheckersBoard();
+            FormCheckersBoard checkers = new FormCheckersBoard(m_FirstPlayerName, m_SecondPlayerName, m_BoardSize, m_IsSecondPlayerAComputer);
 
             this.Hide();
             checkers.ShowDialog();

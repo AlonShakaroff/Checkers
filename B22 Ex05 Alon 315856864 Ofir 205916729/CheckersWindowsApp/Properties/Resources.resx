@@ -121,10 +121,13 @@
   <data name="wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dark-wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dark-wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="dark wood texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dark wood texture.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dark-wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dark-wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="wood-label-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood-label-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

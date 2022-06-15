@@ -44,6 +44,7 @@
             // 
             // PanelPlayerTwo
             // 
+            this.PanelPlayerTwo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PanelPlayerTwo.BackColor = System.Drawing.Color.Transparent;
             this.PanelPlayerTwo.BackgroundImage = global::CheckersWindowsApp.Properties.Resources.wood_label;
             this.PanelPlayerTwo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -78,6 +79,7 @@
             // 
             // PanelPlayerOne
             // 
+            this.PanelPlayerOne.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PanelPlayerOne.BackColor = System.Drawing.Color.Transparent;
             this.PanelPlayerOne.BackgroundImage = global::CheckersWindowsApp.Properties.Resources.wood_label;
             this.PanelPlayerOne.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -113,6 +115,7 @@
             // 
             // PanelGameBoard
             // 
+            this.PanelGameBoard.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PanelGameBoard.BackColor = System.Drawing.Color.Transparent;
             this.PanelGameBoard.Location = new System.Drawing.Point(52, 100);
             this.PanelGameBoard.Name = "PanelGameBoard";
@@ -133,6 +136,7 @@
             this.Controls.Add(this.PanelGameBoard);
             this.Controls.Add(this.PanelPlayerOne);
             this.Controls.Add(this.PanelPlayerTwo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormCheckersGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

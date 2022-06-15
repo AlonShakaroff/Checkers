@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CheckersEngine
 {
@@ -65,38 +64,6 @@ namespace CheckersEngine
         public void ClearGamePiecePossibleMoves()
         {
             PossibleMoves.Clear();
-        }
-
-        public bool CheckIfThePositionIsAPossibleMove(Position i_Position)
-        {
-            bool validMove = false;
-
-            foreach(Position currentPossibleMove in PossibleMoves)
-            {
-                if(currentPossibleMove.Equals(i_Position))
-                {
-                    validMove = true;
-                    break;
-                }
-            }
-
-            return validMove;
-        }
-
-        public Position GetThePositionAfterAnEatingMoveOfTheGamePiece()
-        {
-            Position newPositionAfterEating = null;
-
-            foreach(Position position in PossibleMoves)
-            {
-                if(Math.Abs(position.Row - position.Row) == 2)
-                {
-                    newPositionAfterEating = position;
-                    break;
-                }
-            }
-
-            return newPositionAfterEating;
         }
     }
 }

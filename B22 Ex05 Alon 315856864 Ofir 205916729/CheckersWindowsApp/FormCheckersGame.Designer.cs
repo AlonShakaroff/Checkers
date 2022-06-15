@@ -125,7 +125,7 @@
             // TimerComputerTurnDelay
             // 
             this.TimerComputerTurnDelay.Interval = 1000;
-            this.TimerComputerTurnDelay.Tick += new System.EventHandler(this.TimerComputerTurnDelay_Tick);
+            this.TimerComputerTurnDelay.Tick += new System.EventHandler(this.timerComputerTurnDelay_Tick);
             // 
             // FormCheckersGame
             // 

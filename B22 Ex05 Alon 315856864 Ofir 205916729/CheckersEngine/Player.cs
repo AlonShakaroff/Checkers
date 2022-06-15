@@ -102,21 +102,12 @@ namespace CheckersEngine
             ref int io_CurrentRow,
             ref int io_CurrentColumn,
             out Position o_GamePiecePosition,
-            int i_NumberOfGamePiecesInARow
-            )
+            int i_NumberOfGamePiecesInARow)
         {
             if (i_PieceCounter % i_NumberOfGamePiecesInARow == 0)
             {
                 io_CurrentRow++;
-
-                if(io_CurrentRow % 2 == 0)
-                {
-                    io_CurrentColumn = 1;
-                }
-                else
-                {
-                    io_CurrentColumn = 0;
-                }
+                io_CurrentColumn = io_CurrentRow % 2 == 0 ? 1 : 0;
             }
             else
             {
@@ -125,7 +116,6 @@ namespace CheckersEngine
 
             o_GamePiecePosition = new Position(io_CurrentRow, io_CurrentColumn);
         }
-
 
         //-------------------------------------------------------------------------------Checks--------------------------------------------------------------------------------//
         public bool CheckIfThePlayerHasAnyPossibleMoves()
@@ -150,7 +140,6 @@ namespace CheckersEngine
         }
 
         //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
-
         public void ClearPlayersPossibleMoves()
         {
             foreach (GamePiece currentGamePiece in GamePieces)

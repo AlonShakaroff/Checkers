@@ -48,7 +48,7 @@
         {
             bool equals;
 
-            if (i_Object == null || GetType().Equals(i_Object.GetType()) == false)
+            if (i_Object == null || GetType() == i_Object.GetType() == false)
             {
                 equals = false;
             }
@@ -61,14 +61,17 @@
             return equals;
         }
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Row * 397) ^ Column;
+            }
+        }
+
         public override string ToString()
         {
             return $"({Row},{Column})";
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

@@ -33,12 +33,10 @@ namespace CheckersEngine
                 Position.eDirection.UpRight
             };
 
+        private readonly bool r_IsPVP;
         private Player m_PlayerThatItIsItsTurn;
         private Player m_PlayerThatItIsNotItsTurn;
-        private readonly GameBoard r_GameBoard;
-        private readonly bool r_IsPVP;
         private string m_WinnerOfTheGame;
-        private eGameStatus m_GameStatus;
         private bool m_EatingIsPossibleThisTurn;
         private bool m_APieceWasEaten;
 
@@ -57,30 +55,23 @@ namespace CheckersEngine
             int i_NumberOfRowsOnTheBoard,
             int i_NumberOfColumnsOnTheBoard,
             int i_NumberOfGamePiecesPerPlayer,
-            bool i_IsPVP
-            )
+            bool i_IsPVP)
         {
             Player1 = new Player(i_FirstPlayerName, i_NumberOfGamePiecesPerPlayer, true, i_NumberOfRowsOnTheBoard);
             Player2 = new Player(i_SecondPlayerName, i_NumberOfGamePiecesPerPlayer, false, i_NumberOfRowsOnTheBoard);
-            r_GameBoard = new GameBoard(i_NumberOfRowsOnTheBoard, i_NumberOfColumnsOnTheBoard, Player1.GamePieces, Player2.GamePieces);
+            GameBoard = new GameBoard(i_NumberOfRowsOnTheBoard, i_NumberOfColumnsOnTheBoard, Player1.GamePieces, Player2.GamePieces);
             m_WinnerOfTheGame = null;
             r_IsPVP = i_IsPVP;
             m_APieceWasEaten = false;
             m_EatingIsPossibleThisTurn = false;
-            m_GameStatus = eGameStatus.OnGoing;
+            GameStatus = eGameStatus.OnGoing;
             m_PlayerThatItIsNotItsTurn = Player2;
             m_PlayerThatItIsItsTurn = Player1;
             generateNewPossibleMovesForAPlayer(Player1);
         }
 
         //-------------------------------------------------------------------------------Properties----------------------------------------------------------------------------//
-        public eGameStatus GameStatus 
-        {
-            get 
-            {
-                return m_GameStatus; 
-            }
-        }
+        public eGameStatus GameStatus { get; private set; }
 
         public string Winner
         {
@@ -88,14 +79,7 @@ namespace CheckersEngine
             {
                 string winnerOfTheGame;
 
-                if (m_WinnerOfTheGame == null)
-                {
-                    winnerOfTheGame = "No one";
-                }
-                else
-                {
-                    winnerOfTheGame = m_WinnerOfTheGame;
-                }
+                winnerOfTheGame = m_WinnerOfTheGame ?? "No one";
 
                 return winnerOfTheGame;
             }
@@ -105,38 +89,12 @@ namespace CheckersEngine
 
         public Player Player2 { get; }
 
-        public GameBoard GameBoard 
-        {
-            get 
-            {
-                return r_GameBoard;
-            }
-        }
+        public GameBoard GameBoard { get; }
 
         //-------------------------------------------------------------------------------Getters-------------------------------------------------------------------------------//
-        public string GetTheNameOfThePlayerWhoCurrentlyPlaying()
-        {
-            return m_PlayerThatItIsItsTurn.Name;
-        }
-
-        public string GetTheNameOfThePlayerWhoCurrentlyNotPlaying()
-        {
-            return m_PlayerThatItIsNotItsTurn.Name;
-        }
-
         public int GetTheNumberOfRowsInTheGameBoard()
         {
-            return r_GameBoard.NumberOfRows;
-        }
-
-        public int GetTheNumberOfColumnsInTheGameBoard()
-        {
-            return r_GameBoard.NumberOfColumns;
-        }
-
-        public GamePiece GetTheGamePieceOnRequestedPosition(Position i_Position)
-        {
-            return r_GameBoard.GetTheGamePieceOnRequestedPosition(i_Position);
+            return GameBoard.NumberOfRows;
         }
 
         //-------------------------------------------------------------------------------Setters-------------------------------------------------------------------------------//
@@ -150,20 +108,10 @@ namespace CheckersEngine
             m_WinnerOfTheGame = m_PlayerThatItIsItsTurn.Name;
         }
 
-        public GamePiece.eSymbol GetTheSymbolOfTheGamePieceOnRequestedPosition(Position i_Position)
-        {
-            return r_GameBoard.GetTheGamePieceOnRequestedPosition(i_Position).Symbol;
-        }
-
         //-------------------------------------------------------------------------------Checks--------------------------------------------------------------------------------//
         public bool CheckIfTheGameIsStillGoing()
         {
-            return m_GameStatus != eGameStatus.OnGoing;
-        }
-
-        public bool CheckIfThePlayerWhoCurrentlyPlayingIsPlayer1()
-        {
-            return m_PlayerThatItIsItsTurn == Player1;
+            return GameStatus != eGameStatus.OnGoing;
         }
 
         public bool CheckIfThePlayerWhoCurrentlyPlayingIsAComputer()
@@ -171,16 +119,11 @@ namespace CheckersEngine
             return r_IsPVP == false && m_PlayerThatItIsItsTurn == Player2;
         }
 
-        public bool CheckIfThePositionIsInTheGameBoardBoundaries(Position i_Position)
-        {
-            return r_GameBoard.CheckIfThePositionIsInTheBoardBoundaries(i_Position);
-        }
-
         private void checkIfTheGameIsOver()
         {
             if (Player1.CheckIfThePlayerHasAnyPossibleMoves() == false && Player2.CheckIfThePlayerHasAnyPossibleMoves() == false)
             {
-                m_GameStatus = eGameStatus.Draw;
+                GameStatus = eGameStatus.Draw;
             }
             else if (m_PlayerThatItIsNotItsTurn.NumberOfGamePiecesLeft == 0 || m_PlayerThatItIsNotItsTurn.CheckIfThePlayerHasAnyPossibleMoves() == false)
             {
@@ -201,31 +144,21 @@ namespace CheckersEngine
         {
             if (i_GamePiecePlayed.IsKing == false)
             {
-                if (i_NewPosition.Row == 0 || i_NewPosition.Row == (r_GameBoard.NumberOfRows - 1))
+                if (i_NewPosition.Row == 0 || i_NewPosition.Row == (GameBoard.NumberOfRows - 1))
                 {
                     i_GamePiecePlayed.MakeThePawnAKing();
                 }
             }
         }
 
-        public bool CheckIfThePositionHasAGamePieceOnIt(Position i_Position)
-        {
-            return r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(i_Position);
-        }
-
-        public bool CheckIfTheGamePiecesBelongToTheSamePlayer(Position i_FirstPosition, Position i_SecondPosition)
-        {
-            return r_GameBoard.CheckIfTheGamePiecesBelongToTheSamePlayer(i_FirstPosition, i_SecondPosition);
-        }
-
         //-------------------------------------------------------------------------------Methods-------------------------------------------------------------------------------//
         public void MakeAMove(Position i_CurrentPosition, Position i_NewPosition)
         {
-            GamePiece gamePiecePlayed = r_GameBoard.GetTheGamePieceOnRequestedPosition(i_CurrentPosition);
+            GamePiece gamePiecePlayed = GameBoard.GetTheGamePieceOnRequestedPosition(i_CurrentPosition);
 
             m_APieceWasEaten = false;
             eatARivalGamePieceIfNecessary(i_CurrentPosition, i_NewPosition);
-            r_GameBoard.MoveAGamePieceToANewPosition(i_CurrentPosition, i_NewPosition);
+            GameBoard.MoveAGamePieceToANewPosition(i_CurrentPosition, i_NewPosition);
             checkIfTheGamePieceNeedsToBecomeAKingAndMakeItAKingIfNecessary(gamePiecePlayed, i_NewPosition);
             GenerateNewPossibleMovesForBothPlayers();
             checkIfTheGameIsOver();
@@ -247,7 +180,7 @@ namespace CheckersEngine
             }
 
             m_PlayerThatItIsNotItsTurn.ClearPlayersPossibleMoves();
-            MoveMade?.Invoke(r_GameBoard.Board[i_CurrentPosition.Row, i_CurrentPosition.Column], r_GameBoard.Board[i_NewPosition.Row, i_NewPosition.Column]);
+            MoveMade?.Invoke(GameBoard.Board[i_CurrentPosition.Row, i_CurrentPosition.Column], GameBoard.Board[i_NewPosition.Row, i_NewPosition.Column]);
         }
 
         private bool checkIfChainEatingIsPossibleAndPrepareNextTurnAccordingly(Position i_NewPosition)
@@ -255,7 +188,7 @@ namespace CheckersEngine
             List<Position> potentialNewPossibleMoves = new List<Position>(3);
             bool isChainEatingPossible = false;
 
-            foreach(Position currentPossibleMove in r_GameBoard.GetTheGamePieceOnRequestedPosition(i_NewPosition).PossibleMoves)
+            foreach(Position currentPossibleMove in GameBoard.GetTheGamePieceOnRequestedPosition(i_NewPosition).PossibleMoves)
             {
                 if(Math.Abs(currentPossibleMove.Row - i_NewPosition.Row) == 2)
                 {
@@ -269,7 +202,7 @@ namespace CheckersEngine
                 isChainEatingPossible = true;
                 foreach (Position currentNewPossibleMove in potentialNewPossibleMoves)
                 {
-                    r_GameBoard.GetTheGamePieceOnRequestedPosition(i_NewPosition).PossibleMoves.Add(currentNewPossibleMove);
+                    GameBoard.GetTheGamePieceOnRequestedPosition(i_NewPosition).PossibleMoves.Add(currentNewPossibleMove);
                 }
             }
 
@@ -318,20 +251,20 @@ namespace CheckersEngine
 
         private void addPossibleMovesInRequestedDirections(GamePiece i_GamePiece, List<Position.eDirection> i_RequestedDirectionsList, Player i_Player)
         {
-            Position currentPossiblePossitionInRelativeDirection;
+            Position currentPossiblePositionInRelativeDirection;
             Position currentPossibleEatingPositionInRelativeDirection;
             
             foreach(Position.eDirection currentCheckedDirection in i_RequestedDirectionsList)
             {
-                currentPossiblePossitionInRelativeDirection =
+                currentPossiblePositionInRelativeDirection =
                     i_GamePiece.Position.GetThePositionLocatedInTheDirectionRelativeToThisPosition(currentCheckedDirection);
-                if (r_GameBoard.CheckIfThePositionIsInTheBoardBoundaries(currentPossiblePossitionInRelativeDirection))
+                if (GameBoard.CheckIfThePositionIsInTheBoardBoundaries(currentPossiblePositionInRelativeDirection))
                 {
-                    if (r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(currentPossiblePossitionInRelativeDirection))
+                    if (GameBoard.CheckIfTheCellHasAGamePieceOnIt(currentPossiblePositionInRelativeDirection))
                     {
                         currentPossibleEatingPositionInRelativeDirection =
-                            currentPossiblePossitionInRelativeDirection.GetThePositionLocatedInTheDirectionRelativeToThisPosition(currentCheckedDirection);
-                        if (CheckIfThePieceOnThePositionIsEdible(i_GamePiece, currentPossiblePossitionInRelativeDirection,currentPossibleEatingPositionInRelativeDirection))
+                            currentPossiblePositionInRelativeDirection.GetThePositionLocatedInTheDirectionRelativeToThisPosition(currentCheckedDirection);
+                        if (CheckIfThePieceOnThePositionIsEdible(i_GamePiece, currentPossiblePositionInRelativeDirection, currentPossibleEatingPositionInRelativeDirection))
                         {
                             if(m_EatingIsPossibleThisTurn == false)
                             {
@@ -344,7 +277,7 @@ namespace CheckersEngine
                     }
                     else if(m_EatingIsPossibleThisTurn == false)
                     {
-                        i_GamePiece.AddPossibleMove(currentPossiblePossitionInRelativeDirection);
+                        i_GamePiece.AddPossibleMove(currentPossiblePositionInRelativeDirection);
                     }
                 }
             }
@@ -352,18 +285,18 @@ namespace CheckersEngine
 
         private bool CheckIfThePieceOnThePositionIsEdible(GamePiece i_PlayingGamePiece, Position i_EatingPosition, Position i_AfterEatingPosition)
         {
-            bool thePositionAfterEatingIsInTheBoardBoundaries = r_GameBoard.CheckIfThePositionIsInTheBoardBoundaries(i_AfterEatingPosition);
+            bool thePositionAfterEatingIsInTheBoardBoundaries = GameBoard.CheckIfThePositionIsInTheBoardBoundaries(i_AfterEatingPosition);
             bool theOtherGamePieceBelongsToTheSamePlayer, thePositionAfterTheEatingHasAGamePieceOnIt;
-            bool ediable = false;
+            bool edible = false;
 
             if (thePositionAfterEatingIsInTheBoardBoundaries)
             {
-                theOtherGamePieceBelongsToTheSamePlayer = r_GameBoard.GetTheGamePieceOnRequestedPosition(i_EatingPosition).PlayerProperty.Equals(i_PlayingGamePiece.PlayerProperty);
-                thePositionAfterTheEatingHasAGamePieceOnIt = r_GameBoard.CheckIfTheCellHasAGamePieceOnIt(i_AfterEatingPosition);
-                ediable = theOtherGamePieceBelongsToTheSamePlayer == false && thePositionAfterTheEatingHasAGamePieceOnIt == false;
+                theOtherGamePieceBelongsToTheSamePlayer = GameBoard.GetTheGamePieceOnRequestedPosition(i_EatingPosition).PlayerProperty.Equals(i_PlayingGamePiece.PlayerProperty);
+                thePositionAfterTheEatingHasAGamePieceOnIt = GameBoard.CheckIfTheCellHasAGamePieceOnIt(i_AfterEatingPosition);
+                edible = theOtherGamePieceBelongsToTheSamePlayer == false && thePositionAfterTheEatingHasAGamePieceOnIt == false;
             }
 
-            return ediable;
+            return edible;
         }
 
         private void eatARivalGamePiece(Position i_CurrentPosition, Position i_NewPosition)
@@ -371,11 +304,11 @@ namespace CheckersEngine
             int rowPosition = i_NewPosition.Row - i_CurrentPosition.Row < 0 ? i_NewPosition.Row + 1 : i_NewPosition.Row - 1;
             int columnPosition = i_NewPosition.Column - i_CurrentPosition.Column < 0 ? i_NewPosition.Column + 1 : i_NewPosition.Column - 1;
             Position eatenGamePiecePosition = new Position(rowPosition, columnPosition);
-            GamePiece eatenGamePiece = r_GameBoard.GetTheGamePieceOnRequestedPosition(eatenGamePiecePosition);
+            GamePiece eatenGamePiece = GameBoard.GetTheGamePieceOnRequestedPosition(eatenGamePiecePosition);
 
             m_PlayerThatItIsNotItsTurn.DeleteAGamePieceFromGamePiecesList(eatenGamePiece);
-            r_GameBoard.DeleteTheGamePieceOnRequestedPosition(eatenGamePiecePosition);
-            GamePieceWasEaten?.Invoke(r_GameBoard.Board[eatenGamePiecePosition.Row, eatenGamePiecePosition.Column]);
+            GameBoard.DeleteTheGamePieceOnRequestedPosition(eatenGamePiecePosition);
+            GamePieceWasEaten?.Invoke(GameBoard.Board[eatenGamePiecePosition.Row, eatenGamePiecePosition.Column]);
         }
 
         public void GetAMoveFromTheComputer(out Position o_CurrentPosition, out Position o_NewPosition)
@@ -402,19 +335,19 @@ namespace CheckersEngine
 
         public void PrepareForANewGame()
         {
-            m_GameStatus = eGameStatus.OnGoing;
+            GameStatus = eGameStatus.OnGoing;
             m_WinnerOfTheGame = null;
             m_PlayerThatItIsNotItsTurn = Player2;
             m_PlayerThatItIsItsTurn = Player1;
             Player1.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
             Player2.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
-            r_GameBoard.PrepareTheBoardForANewGame(Player1.GamePieces, Player2.GamePieces);
+            GameBoard.PrepareTheBoardForANewGame(Player1.GamePieces, Player2.GamePieces);
             generateNewPossibleMovesForAPlayer(Player1);
         }
 
         public void FinishTheGame()
         {
-            m_GameStatus = eGameStatus.HasAWinner;
+            GameStatus = eGameStatus.HasAWinner;
             setTheWinnerOfTheGameAndAddWinningPoints();
         }
     }

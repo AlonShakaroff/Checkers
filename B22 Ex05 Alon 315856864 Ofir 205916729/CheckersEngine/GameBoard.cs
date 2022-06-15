@@ -67,18 +67,11 @@ namespace CheckersEngine
             return Board[i_PositionToCheck.Row, i_PositionToCheck.Column].IsTheCellTaken();
         }
 
-        public bool CheckIfTheGamePiecesBelongToTheSamePlayer(Position i_FirstPosition, Position i_SecondPosition)
-        {
-            GamePiece firstGamePiece = GetTheGamePieceOnRequestedPosition(i_FirstPosition);
-            GamePiece secondGamePiece = GetTheGamePieceOnRequestedPosition(i_SecondPosition);
-
-            return firstGamePiece.PlayerProperty == secondGamePiece.PlayerProperty;
-        }
-
         public void DeleteTheGamePieceOnRequestedPosition(Position i_RequestedPosition)
         {
             Board[i_RequestedPosition.Row, i_RequestedPosition.Column].GamePiece = null;
         }
+
         public void PrepareTheBoardForANewGame(List<GamePiece> i_FirstPlayerGamePieces, List<GamePiece> i_SecondPlayerGamePieces)
         {
             clearTheBoard();

@@ -43,7 +43,7 @@ namespace CheckersWindowsApp
             }
         }
 
-        private void radioButtonAgainstComputer_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonAgainstComputer_CheckedChanged(object i_Sender, EventArgs i_E)
         {
             textBoxPlayerTwoName.Text = "Computer";
             textBoxPlayerTwoName.Enabled = false;
@@ -65,13 +65,13 @@ namespace CheckersWindowsApp
             return !validName;
         }
 
-        private void radioButtonAgainstHuman_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonAgainstHuman_CheckedChanged(object i_Sender, EventArgs i_E)
         {
             textBoxPlayerTwoName.Text = string.Empty;
             textBoxPlayerTwoName.Enabled = true;
         }
 
-        private void buttonStartGame_Click(object sender, EventArgs e)
+        private void buttonStartGame_Click(object i_Sender, EventArgs i_E)
         {
             if(checkIfAnyPlayersNameIsMissing())
             {
@@ -81,18 +81,18 @@ namespace CheckersWindowsApp
             {
                 MessageBox.Show("Player's name should be contained only by alphabetical characters.");
             }
-            else if(CheckIfBothPlayersHaveTheSameName())
+            else if(checkIfBothPlayersHaveTheSameName())
             {
                 MessageBox.Show("The players must have different names.");
             }
             else
             {
-                GatherGameSettings();
-                StartTheGame();
+                gatherGameSettings();
+                startTheGame();
             }
         }
 
-        private void GatherGameSettings()
+        private void gatherGameSettings()
         {
             m_PlayerOneName = textBoxPlayerOneName.Text;
             m_PlayerTwoName = textBoxPlayerTwoName.Text;
@@ -106,7 +106,7 @@ namespace CheckersWindowsApp
                 || checkIfPlayersNameContainsNoneAlphabeticalCharacters(textBoxPlayerTwoName);
         }
 
-        private void StartTheGame()
+        private void startTheGame()
         {
             FormCheckersGame checkers = new FormCheckersGame(
                 m_PlayerOneName,
@@ -120,7 +120,7 @@ namespace CheckersWindowsApp
             this.Close();
         }
 
-        private bool CheckIfBothPlayersHaveTheSameName()
+        private bool checkIfBothPlayersHaveTheSameName()
         {
             return textBoxPlayerOneName.Text.Equals(textBoxPlayerTwoName.Text);
         }

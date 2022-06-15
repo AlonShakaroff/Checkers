@@ -3,10 +3,10 @@ using System.Windows.Forms;
 
 namespace CheckersWindowsApp
 {
-    class Program
+    public class Program
     {
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

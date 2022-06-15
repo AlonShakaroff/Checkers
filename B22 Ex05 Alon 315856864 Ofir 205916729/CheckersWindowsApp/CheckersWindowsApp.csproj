@@ -91,6 +91,7 @@
     <None Include="Resources\black-king.png" />
     <Content Include="Resources\black-pawn-on-tile.png" />
     <None Include="Resources\black-pawn.png" />
+    <None Include="Resources\chosen-dark-tile.png" />
     <Content Include="Resources\dark-tile.png" />
     <Content Include="Resources\white-king-on-tile.png" />
     <None Include="Resources\white-king.png" />

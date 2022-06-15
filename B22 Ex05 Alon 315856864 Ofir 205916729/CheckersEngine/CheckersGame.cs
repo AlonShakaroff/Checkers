@@ -68,6 +68,7 @@ namespace CheckersEngine
             m_GameStatus = eGameStatus.OnGoing;
             m_PlayerThatItIsNotItsTurn = Player2;
             m_PlayerThatItIsItsTurn = Player1;
+            generateNewPossibleMovesForAPlayer(Player1);
         }
 
         //-------------------------------------------------------------------------------Properties----------------------------------------------------------------------------//
@@ -238,6 +239,7 @@ namespace CheckersEngine
                 SwitchPlayersTurns();
             }
 
+            m_PlayerThatItIsNotItsTurn.ClearPlayersPossibleMoves();
             MoveMade?.Invoke(r_GameBoard.Board[i_CurrentPosition.Row, i_CurrentPosition.Column], r_GameBoard.Board[i_NewPosition.Row, i_NewPosition.Column]);
         }
 
@@ -400,7 +402,7 @@ namespace CheckersEngine
             Player1.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
             Player2.InitializeGamePiecesPositions(GetTheNumberOfRowsInTheGameBoard());
             r_GameBoard.PrepareTheBoardForANewGame(Player1.GamePieces, Player2.GamePieces);
-            GenerateNewPossibleMovesForBothPlayers();
+            generateNewPossibleMovesForAPlayer(Player1);
         }
 
         public void FinishTheGame()

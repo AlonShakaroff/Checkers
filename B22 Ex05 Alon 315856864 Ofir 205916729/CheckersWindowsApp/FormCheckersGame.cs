@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using CheckersEngine;
+using System.Collections.Generic;
+
 
 namespace CheckersWindowsApp
 {
@@ -11,6 +13,8 @@ namespace CheckersWindowsApp
         private readonly bool r_IsSecondPlayerAComputer;
         private readonly CheckersGame r_CheckersGame;
         private readonly PictureBoxBoardTile[,] r_PictureBoxBoardTiles;
+        private readonly List<BoardCell> r_PossibleMovesCells;
+        private BoardCell m_ChosenSourceCell;
 
         internal class PictureBoxBoardTile : PictureBox
         {
@@ -41,6 +45,8 @@ namespace CheckersWindowsApp
             r_CheckersGame.GamePieceWasEaten += OnGamePieceWasEaten;
             r_PictureBoxBoardTiles = new PictureBoxBoardTile[r_BoardSize, r_BoardSize];
             initializePictureBoxBoardTileArray();
+            m_ChosenSourceCell = null;
+            r_PossibleMovesCells = new List<BoardCell>();
         }
 
         private void initializeScoreBoardLabels(string i_FirstPlayerName, string i_SecondPlayerName)
@@ -54,7 +60,7 @@ namespace CheckersWindowsApp
         {
             int cellTileSize = r_BoardSize == 6 ? 95 : r_BoardSize == 8 ? 75 : 60;
 
-            initializeComponentsSizes(r_BoardSize, cellTileSize);
+            initializeComponentsSizesAndLocations(r_BoardSize, cellTileSize);
 
             for (int i = 0; i < r_BoardSize; ++i)
             {
@@ -89,6 +95,11 @@ namespace CheckersWindowsApp
             pictureBoxBoardTile.MouseEnter += pictureBoxBoardTile_MouseEnter;
         }
 
+        private void PictureBoxBoardTile_MouseLeave(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void updateDarkTileContent(PictureBoxBoardTile pictureBoxBoardTile)
         {
             GamePiece gamePieceOnTile = 
@@ -121,17 +132,17 @@ namespace CheckersWindowsApp
             }
         }
 
-        private void initializeComponentsSizes(int i_Size, int i_CellSize)
+        private void initializeComponentsSizesAndLocations(int i_Size, int i_CellSize)
         {
             PanelGameBoard.Size = new Size(i_Size * i_CellSize + 100, i_Size * i_CellSize + 100);
-            Size = new Size(PanelGameBoard.Width + 100, PanelGameBoard.Height + 120);
+            Size = new Size(PanelGameBoard.Width + 100, PanelGameBoard.Height + 130);
             PanelPlayerOne.Left = 50;
             PanelPlayerOne.Top = 20;
             PanelPlayerTwo.Left = this.Size.Width - PanelPlayerTwo.Width - 50;
             PanelPlayerTwo.Top = 20;
             MinimumSize = Size;
             PanelGameBoard.Left = 50;
-            PanelGameBoard.Top = PanelPlayerOne.Top + PanelPlayerOne.Height;
+            PanelGameBoard.Top = PanelPlayerOne.Top + PanelPlayerOne.Height + 10;
         }
 
         public void OnTurnChanged()
@@ -151,12 +162,83 @@ namespace CheckersWindowsApp
 
         private void pictureBoxBoardTile_Clicked(object sender, EventArgs e)
         {
+            PictureBoxBoardTile ClickedBoardTile = sender as PictureBoxBoardTile;
+            BoardCell ClickedBoardCell = r_CheckersGame.GameBoard.Board[ClickedBoardTile.Position.Row, ClickedBoardTile.Position.Column];
 
+            if(m_ChosenSourceCell == null && ClickedBoardCell.IsTheCellTaken() && ClickedBoardCell.GamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
+            {
+                choosePictureBoxBoardCellTile(ClickedBoardCell, ClickedBoardTile);
+            }
+            else if(m_ChosenSourceCell == ClickedBoardCell)
+            {
+                unchoosePictureBoxBoardCellTile(ClickedBoardTile);
+            }
+        }
+
+        private void choosePictureBoxBoardCellTile(BoardCell chosenBoardCell, PictureBoxBoardTile chosenPictureBoxBoardTile)
+        {
+            m_ChosenSourceCell = chosenBoardCell;
+            foreach(Position possibleMove in m_ChosenSourceCell.GamePiece.PossibleMoves)
+            {
+                BoardCell possibleMoveBoardCell = r_CheckersGame.GameBoard.Board[possibleMove.Row, possibleMove.Column];
+                r_PossibleMovesCells.Add(possibleMoveBoardCell);
+                emphasizePictureBoxTile(r_PictureBoxBoardTiles[possibleMove.Row, possibleMove.Column]);
+            }
+
+            emphasizePictureBoxTile(chosenPictureBoxBoardTile);
+        }
+
+        private void unchoosePictureBoxBoardCellTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
+        {
+            Position possibleMovePosition;
+
+            m_ChosenSourceCell = null;
+            foreach (BoardCell possibleMoveCell in r_PossibleMovesCells)
+            {
+                possibleMovePosition = possibleMoveCell.Position;
+                deEmphasizePictureBoxTile(r_PictureBoxBoardTiles[possibleMovePosition.Row, possibleMovePosition.Column]);
+            }
+
+            deEmphasizePictureBoxTile(chosenPictureBoxBoardTile);
+            r_PossibleMovesCells.Clear();
+        }
+
+        private void emphasizePictureBoxTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
+        {
+            chosenPictureBoxBoardTile.BackgroundImage = Properties.Resources.chosen_dark_tile;
+            chosenPictureBoxBoardTile.MouseEnter -= pictureBoxBoardTile_MouseEnter;
+            chosenPictureBoxBoardTile.MouseLeave -= pictureBoxBoardTile_MouseLeave;
+            chosenPictureBoxBoardTile.Cursor = Cursors.Hand;
+        }
+
+        private void deEmphasizePictureBoxTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
+        {
+            chosenPictureBoxBoardTile.BackgroundImage = Properties.Resources.dark_tile;
+            chosenPictureBoxBoardTile.MouseEnter += pictureBoxBoardTile_MouseEnter;
+            chosenPictureBoxBoardTile.MouseLeave += pictureBoxBoardTile_MouseLeave;
+            chosenPictureBoxBoardTile.Cursor = Cursors.Default;
         }
 
         private void pictureBoxBoardTile_MouseEnter(object sender, EventArgs e)
         {
+            PictureBoxBoardTile enteredPictureBoxBoardTile = sender as PictureBoxBoardTile;
+            BoardCell enteredBoardCell = r_CheckersGame.GameBoard.Board[enteredPictureBoxBoardTile.Position.Row, enteredPictureBoxBoardTile.Position.Column];
 
+            if(m_ChosenSourceCell == null && enteredBoardCell.IsTheCellTaken() && enteredBoardCell.GamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
+            {
+                enteredPictureBoxBoardTile.BackgroundImage = Properties.Resources.chosen_dark_tile;
+                enteredPictureBoxBoardTile.Cursor = Cursors.Hand;
+                enteredPictureBoxBoardTile.MouseLeave += pictureBoxBoardTile_MouseLeave;
+            }
+        }
+
+        private void pictureBoxBoardTile_MouseLeave(object sender, EventArgs e)
+        {
+            PictureBoxBoardTile leftPictureBoxBoardTile = sender as PictureBoxBoardTile;
+
+            leftPictureBoxBoardTile.BackgroundImage = Properties.Resources.dark_tile;
+            leftPictureBoxBoardTile.Cursor = Cursors.Default;
+            leftPictureBoxBoardTile.MouseLeave -= pictureBoxBoardTile_MouseLeave;
         }
 
         private void PanelPlayerOne_Paint(object sender, PaintEventArgs e)

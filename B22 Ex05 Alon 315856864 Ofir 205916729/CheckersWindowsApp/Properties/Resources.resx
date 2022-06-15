@@ -118,46 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="white-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\white-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="white-king-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white-king-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="dark wood texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dark wood texture.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="white-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\white-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="dark-wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dark-wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wood-label-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wood-label-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="white-pawn-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\white-pawn-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="dark-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dark-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="black-pawn-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\black-pawn-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="black-king-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\black-king-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="black-king" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\black-king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="black-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\black-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="white-king" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white-king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="white-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\white-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="black-pawn-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black-pawn-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="white-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\white-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="black-king-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black-king-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="black-pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black-pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood-label-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood-label-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="black-king" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black-king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dark-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark-wood-label" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dark-wood-label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="white-pawn-on-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\white-pawn-on-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark wood texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dark wood texture.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="chosen-dark-tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chosen-dark-tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

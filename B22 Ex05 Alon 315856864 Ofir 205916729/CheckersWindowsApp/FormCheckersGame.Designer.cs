@@ -128,6 +128,7 @@
             this.Controls.Add(this.PanelPlayerTwo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormCheckersGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Checkers";
             this.PanelPlayerTwo.ResumeLayout(false);
             this.PanelPlayerTwo.PerformLayout();

@@ -161,32 +161,38 @@ namespace CheckersWindowsApp
 
         public void OnMoveMade(BoardCell i_SourceBoardCell, BoardCell i_DestinationBoardCell)
         {
-
+            updateDarkTileContent(r_PictureBoxBoardTiles[i_SourceBoardCell.Position.Row, i_SourceBoardCell.Position.Column]);
+            updateDarkTileContent(r_PictureBoxBoardTiles[i_DestinationBoardCell.Position.Row, i_DestinationBoardCell.Position.Column]);
         }
 
         public void OnGamePieceWasEaten(BoardCell i_EatenBoardCell)
         {
-
+            updateDarkTileContent(r_PictureBoxBoardTiles[i_EatenBoardCell.Position.Row, i_EatenBoardCell.Position.Column]);
         }
 
         private void pictureBoxBoardTile_Clicked(object sender, EventArgs e)
         {
-            PictureBoxBoardTile ClickedBoardTile = sender as PictureBoxBoardTile;
-            BoardCell ClickedBoardCell = r_CheckersGame.GameBoard.Board[ClickedBoardTile.Position.Row, ClickedBoardTile.Position.Column];
+            PictureBoxBoardTile clickedBoardTile = sender as PictureBoxBoardTile;
+            BoardCell clickedBoardCell = r_CheckersGame.GameBoard.Board[clickedBoardTile.Position.Row, clickedBoardTile.Position.Column];
 
-            if(m_ChosenSourceCell == null && ClickedBoardCell.IsTheCellTaken() && ClickedBoardCell.GamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
+            if(m_ChosenSourceCell == null && clickedBoardCell.IsTheCellTaken() && clickedBoardCell.GamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
             {
-                choosePictureBoxBoardCellTile(ClickedBoardCell, ClickedBoardTile);
+                choosePictureBoxBoardCellTile(clickedBoardCell, clickedBoardTile);
             }
-            else if(m_ChosenSourceCell == ClickedBoardCell)
+            else if(m_ChosenSourceCell == clickedBoardCell)
             {
-                unchoosePictureBoxBoardCellTile(ClickedBoardTile);
+                unchoosePictureBoxBoardCellTile();
+            }
+            else if(r_PossibleMovesCells.Contains(clickedBoardCell))
+            {
+                r_CheckersGame.MakeAMove(m_ChosenSourceCell.Position, clickedBoardCell.Position);
+                unchoosePictureBoxBoardCellTile();
             }
         }
 
-        private void choosePictureBoxBoardCellTile(BoardCell chosenBoardCell, PictureBoxBoardTile chosenPictureBoxBoardTile)
+        private void choosePictureBoxBoardCellTile(BoardCell i_ChosenBoardCell, PictureBoxBoardTile i_ChosenPictureBoxBoardTile)
         {
-            m_ChosenSourceCell = chosenBoardCell;
+            m_ChosenSourceCell = i_ChosenBoardCell;
             foreach(Position possibleMove in m_ChosenSourceCell.GamePiece.PossibleMoves)
             {
                 BoardCell possibleMoveBoardCell = r_CheckersGame.GameBoard.Board[possibleMove.Row, possibleMove.Column];
@@ -194,12 +200,13 @@ namespace CheckersWindowsApp
                 emphasizePictureBoxTile(r_PictureBoxBoardTiles[possibleMove.Row, possibleMove.Column]);
             }
 
-            emphasizePictureBoxTile(chosenPictureBoxBoardTile);
+            emphasizePictureBoxTile(i_ChosenPictureBoxBoardTile);
         }
 
-        private void unchoosePictureBoxBoardCellTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
+        private void unchoosePictureBoxBoardCellTile()
         {
             Position possibleMovePosition;
+            PictureBoxBoardTile chosenPictureBoxBoardTile = r_PictureBoxBoardTiles[m_ChosenSourceCell.Position.Row, m_ChosenSourceCell.Position.Column];
 
             m_ChosenSourceCell = null;
             foreach (BoardCell possibleMoveCell in r_PossibleMovesCells)

@@ -5,7 +5,6 @@ using CheckersEngine;
 using CheckersWindowsApp.Properties;
 using System.Collections.Generic;
 
-
 namespace CheckersWindowsApp
 {
     public partial class FormCheckersGame : Form
@@ -28,17 +27,17 @@ namespace CheckersWindowsApp
             }
         }
 
-        public FormCheckersGame(string i_FirstPlayerName, string i_SecondPlayerName, int i_BoardSize, int i_NumberOfGamePiecesPerPlayer, bool i_IsSecondPlayerAComputer)
+        public FormCheckersGame(string i_PlayerOneName, string i_PlayerTwoName, int i_BoardSize, int i_NumberOfGamePiecesPerPlayer, bool i_IsSecondPlayerAComputer)
         {
             InitializeComponent();
             r_CheckersGame = new CheckersGame(
-                i_FirstPlayerName,
-                i_FirstPlayerName,
+                i_PlayerOneName,
+                i_PlayerOneName,
                 i_BoardSize,
                 i_BoardSize,
                 i_NumberOfGamePiecesPerPlayer,
                 !i_IsSecondPlayerAComputer);
-            initializeScoreBoardLabels(i_FirstPlayerName, i_SecondPlayerName);
+            initializeScoreBoardLabels(i_PlayerOneName, i_PlayerTwoName);
             r_BoardSize = i_BoardSize;
             r_IsSecondPlayerAComputer = i_IsSecondPlayerAComputer;
             r_CheckersGame.TurnChanged += OnTurnChanged;
@@ -50,11 +49,13 @@ namespace CheckersWindowsApp
             r_PossibleMovesCells = new List<BoardCell>();
         }
 
-        private void initializeScoreBoardLabels(string i_FirstPlayerName, string i_SecondPlayerName)
+        private void initializeScoreBoardLabels(string i_PlayerOneName, string i_PlayerTwoName)
         {
             int scorePanelWidth = Math.Max(LabelPlayerOne.Width + LabelPlayerOneScore.Width + 50,
                 LabelPlayerTwo.Width + LabelPlayerTwoScore.Width + 50);
 
+            LabelPlayerOne.Text = i_PlayerOneName;
+            LabelPlayerTwo.Text = i_PlayerTwoName;
             PanelPlayerOne.Width = PanelPlayerTwo.Width = Math.Max(scorePanelWidth, 200);
             PanelPlayerTwo.Enabled = false;
             PanelPlayerTwo.BackgroundImage = Resources.dark_wood_label;
@@ -84,11 +85,11 @@ namespace CheckersWindowsApp
 
             if((Math.Abs(row - column) % 2) == 0)
             {
-                pictureBoxBoardTile.BackgroundImage = Properties.Resources.white_tile;
+                pictureBoxBoardTile.BackgroundImage = Resources.white_tile;
             }
             else
             {
-                pictureBoxBoardTile.BackgroundImage = Properties.Resources.dark_tile;
+                pictureBoxBoardTile.BackgroundImage = Resources.dark_tile;
                 updateDarkTileContent(pictureBoxBoardTile);
             }
 
@@ -114,19 +115,19 @@ namespace CheckersWindowsApp
                 switch(gamePieceOnTile.Symbol)
                 {
                     case GamePiece.eSymbol.WhitePawn:
-                        pictureBoxBoardTile.Image = Properties.Resources.white_pawn;
+                        pictureBoxBoardTile.Image = Resources.white_pawn;
                         break;
 
                     case GamePiece.eSymbol.WhiteKing:
-                        pictureBoxBoardTile.Image = Properties.Resources.white_king;
+                        pictureBoxBoardTile.Image = Resources.white_king;
                         break;
 
                     case GamePiece.eSymbol.BlackPawn:
-                        pictureBoxBoardTile.Image = Properties.Resources.black_pawn;
+                        pictureBoxBoardTile.Image = Resources.black_pawn;
                         break;
 
                     case GamePiece.eSymbol.BlackKing:
-                        pictureBoxBoardTile.Image = Properties.Resources.black_king;
+                        pictureBoxBoardTile.Image = Resources.black_king;
                         break;
                 }
             }
@@ -221,7 +222,7 @@ namespace CheckersWindowsApp
 
         private void emphasizePictureBoxTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
         {
-            chosenPictureBoxBoardTile.BackgroundImage = Properties.Resources.chosen_dark_tile;
+            chosenPictureBoxBoardTile.BackgroundImage = Resources.chosen_dark_tile;
             chosenPictureBoxBoardTile.MouseEnter -= pictureBoxBoardTile_MouseEnter;
             chosenPictureBoxBoardTile.MouseLeave -= pictureBoxBoardTile_MouseLeave;
             chosenPictureBoxBoardTile.Cursor = Cursors.Hand;
@@ -229,7 +230,7 @@ namespace CheckersWindowsApp
 
         private void deEmphasizePictureBoxTile(PictureBoxBoardTile chosenPictureBoxBoardTile)
         {
-            chosenPictureBoxBoardTile.BackgroundImage = Properties.Resources.dark_tile;
+            chosenPictureBoxBoardTile.BackgroundImage = Resources.dark_tile;
             chosenPictureBoxBoardTile.MouseEnter += pictureBoxBoardTile_MouseEnter;
             chosenPictureBoxBoardTile.MouseLeave += pictureBoxBoardTile_MouseLeave;
             chosenPictureBoxBoardTile.Cursor = Cursors.Default;
@@ -242,7 +243,7 @@ namespace CheckersWindowsApp
 
             if(m_ChosenSourceCell == null && enteredBoardCell.IsTheCellTaken() && enteredBoardCell.GamePiece.CheckIfTheGamePieceHasAnyPossibleMoves())
             {
-                enteredPictureBoxBoardTile.BackgroundImage = Properties.Resources.chosen_dark_tile;
+                enteredPictureBoxBoardTile.BackgroundImage = Resources.chosen_dark_tile;
                 enteredPictureBoxBoardTile.Cursor = Cursors.Hand;
                 enteredPictureBoxBoardTile.MouseLeave += pictureBoxBoardTile_MouseLeave;
             }
@@ -252,7 +253,7 @@ namespace CheckersWindowsApp
         {
             PictureBoxBoardTile leftPictureBoxBoardTile = sender as PictureBoxBoardTile;
 
-            leftPictureBoxBoardTile.BackgroundImage = Properties.Resources.dark_tile;
+            leftPictureBoxBoardTile.BackgroundImage = Resources.dark_tile;
             leftPictureBoxBoardTile.Cursor = Cursors.Default;
             leftPictureBoxBoardTile.MouseLeave -= pictureBoxBoardTile_MouseLeave;
         }

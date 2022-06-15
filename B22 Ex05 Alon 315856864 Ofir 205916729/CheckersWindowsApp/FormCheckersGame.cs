@@ -48,6 +48,7 @@ namespace CheckersWindowsApp
             initializePictureBoxBoardTileArray();
             m_ChosenSourceCell = null;
             r_PossibleMovesCells = new List<BoardCell>();
+            r_CheckersGame.ComputersNeedsToPlay += OnComputerNeedsToPlay;
         }
 
         private void initializeScoreBoardLabels(string i_PlayerOneName, string i_PlayerTwoName)
@@ -322,9 +323,9 @@ namespace CheckersWindowsApp
             leftPictureBoxBoardTile.MouseLeave -= pictureBoxBoardTile_MouseLeave;
         }
 
-        private void PanelPlayerOne_Paint(object sender, PaintEventArgs e)
+        private void OnComputerNeedsToPlay()
         {
-
+            TimerComputerTurnDelay.Start();
         }
 
         private void FormCheckersGame_FormClosing(object sender, FormClosingEventArgs e)
@@ -332,6 +333,15 @@ namespace CheckersWindowsApp
             r_CheckersGame.SwitchPlayersTurns();
             r_CheckersGame.FinishTheGame();
             e.Cancel = annouceAboutTheEndOfTheGameAndAskForARematch();
+        }
+
+        private void TimerComputerTurnDelay_Tick(object sender, EventArgs e)
+        {
+            Position sourcePosition, destinationPosition;
+
+            TimerComputerTurnDelay.Stop();
+            r_CheckersGame.GetAMoveFromTheComputer(out sourcePosition, out destinationPosition);
+            r_CheckersGame.MakeAMove(sourcePosition, destinationPosition);
         }
     }
 }

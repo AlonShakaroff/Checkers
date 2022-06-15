@@ -48,6 +48,8 @@ namespace CheckersEngine
 
         public event Action<BoardCell> GamePieceWasEaten;
 
+        public event Action ComputersNeedsToPlay;
+
         //-----------------------------------------------------------------------------Constructors----------------------------------------------------------------------------//
         public CheckersGame(
             string i_FirstPlayerName,
@@ -237,6 +239,11 @@ namespace CheckersEngine
             else
             {
                 SwitchPlayersTurns();
+            }
+
+            if(CheckIfThePlayerWhoCurrentlyPlayingIsAComputer() && GameStatus == eGameStatus.OnGoing)
+            {
+                ComputersNeedsToPlay?.Invoke();
             }
 
             m_PlayerThatItIsNotItsTurn.ClearPlayersPossibleMoves();

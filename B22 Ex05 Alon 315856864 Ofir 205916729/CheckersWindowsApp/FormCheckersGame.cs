@@ -33,7 +33,7 @@ namespace CheckersWindowsApp
             InitializeComponent();
             r_CheckersGame = new CheckersGame(
                 i_PlayerOneName,
-                i_PlayerOneName,
+                i_PlayerTwoName,
                 i_BoardSize,
                 i_BoardSize,
                 i_NumberOfGamePiecesPerPlayer,
@@ -158,13 +158,17 @@ namespace CheckersWindowsApp
 
         public void OnMoveMade(BoardCell i_SourceBoardCell, BoardCell i_DestinationBoardCell)
         {
+
             updateDarkTileContent(r_PictureBoxBoardTiles[i_SourceBoardCell.Position.Row, i_SourceBoardCell.Position.Column]);
             updateDarkTileContent(r_PictureBoxBoardTiles[i_DestinationBoardCell.Position.Row, i_DestinationBoardCell.Position.Column]);
 
             if(r_CheckersGame.CheckIfTheGameIsStillGoing())
             {
                 updatePlayersScore();
-                annouceAboutTheEndOfTheGameAndAskForARematch();
+                if(!annouceAboutTheEndOfTheGameAndAskForARematch())
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -174,12 +178,22 @@ namespace CheckersWindowsApp
             LabelPlayerTwoScore.Text = r_CheckersGame.Player2.WinningPoints.ToString();
         }
 
-        private void annouceAboutTheEndOfTheGameAndAskForARematch()
+        private bool annouceAboutTheEndOfTheGameAndAskForARematch()
         {
             StringBuilder endOfTheGameMessage = new StringBuilder();
             DialogResult dialogResult;
+            bool rematch;
 
-            endOfTheGameMessage.AppendFormat("The winner is {0}!{1}", r_CheckersGame.Winner, Environment.NewLine);
+            switch (r_CheckersGame.GameStatus)
+            {
+                case CheckersGame.eGameStatus.Draw:
+                    endOfTheGameMessage.Append("It's a draw!");
+                    break;
+                case CheckersGame.eGameStatus.HasAWinner:
+                    endOfTheGameMessage.AppendFormat("The winner is {0}!{1}", r_CheckersGame.Winner, Environment.NewLine);
+                    break;
+            }
+
             endOfTheGameMessage.AppendFormat("Would you like to play another round?");
             dialogResult = MessageBox.Show(endOfTheGameMessage.ToString(), "Game Over!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -187,19 +201,22 @@ namespace CheckersWindowsApp
                 r_CheckersGame.PrepareForANewGame();
                 restartTurnLabels();
                 refreshAllTilesContent();
+                rematch = true;
             }
             else
             {
-                this.Close();
+                rematch = false;
             }
+
+            return rematch;
         }
 
         private void restartTurnLabels()
         {
             PanelPlayerOne.Enabled = true;
             PanelPlayerTwo.Enabled = false;
-            PanelPlayerOne.BackgroundImage = Properties.Resources.wood_label;
-            PanelPlayerTwo.BackgroundImage = Properties.Resources.dark_wood_label;
+            PanelPlayerOne.BackgroundImage = Resources.wood_label;
+            PanelPlayerTwo.BackgroundImage = Resources.dark_wood_label;
         }
 
         private void refreshAllTilesContent()
@@ -308,6 +325,13 @@ namespace CheckersWindowsApp
         private void PanelPlayerOne_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void FormCheckersGame_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            r_CheckersGame.SwitchPlayersTurns();
+            r_CheckersGame.FinishTheGame();
+            e.Cancel = annouceAboutTheEndOfTheGameAndAskForARematch();
         }
     }
 }

@@ -117,6 +117,7 @@ namespace CheckersWindowsApp
 
             this.Hide();
             checkers.ShowDialog();
+            this.Close();
         }
 
         private bool CheckIfBothPlayersHaveTheSameName()

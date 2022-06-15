@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CheckersEngine;
 using CheckersWindowsApp.Properties;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CheckersWindowsApp
 {
@@ -100,11 +101,6 @@ namespace CheckersWindowsApp
             pictureBoxBoardTile.MouseEnter += pictureBoxBoardTile_MouseEnter;
         }
 
-        private void PictureBoxBoardTile_MouseLeave(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void updateDarkTileContent(PictureBoxBoardTile pictureBoxBoardTile)
         {
             GamePiece gamePieceOnTile = 
@@ -164,6 +160,36 @@ namespace CheckersWindowsApp
         {
             updateDarkTileContent(r_PictureBoxBoardTiles[i_SourceBoardCell.Position.Row, i_SourceBoardCell.Position.Column]);
             updateDarkTileContent(r_PictureBoxBoardTiles[i_DestinationBoardCell.Position.Row, i_DestinationBoardCell.Position.Column]);
+
+            if(r_CheckersGame.CheckIfTheGameIsStillGoing())
+            {
+                updatePlayersScore();
+                annouceAboutTheEndOfTheGameAndCheckForAReplay();
+            }
+        }
+
+        private void updatePlayersScore()
+        {
+            LabelPlayerOneScore.Text = r_CheckersGame.Player1.WinningPoints.ToString();
+            LabelPlayerTwoScore.Text = r_CheckersGame.Player2.WinningPoints.ToString();
+        }
+
+        private void annouceAboutTheEndOfTheGameAndCheckForAReplay()
+        {
+            StringBuilder endOfTheGameMessage = new StringBuilder();
+            DialogResult dialogResult;
+
+            endOfTheGameMessage.AppendFormat("The winner is {0}!{1}", r_CheckersGame.Winner, Environment.NewLine);
+            endOfTheGameMessage.AppendFormat("Would you like to play another round?");
+            dialogResult = MessageBox.Show(endOfTheGameMessage.ToString(), "Game Over!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                r_CheckersGame.PrepareForANewGame();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         public void OnGamePieceWasEaten(BoardCell i_EatenBoardCell)

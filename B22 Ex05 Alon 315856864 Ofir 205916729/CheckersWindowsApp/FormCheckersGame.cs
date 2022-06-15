@@ -164,7 +164,7 @@ namespace CheckersWindowsApp
             if(r_CheckersGame.CheckIfTheGameIsStillGoing())
             {
                 updatePlayersScore();
-                annouceAboutTheEndOfTheGameAndCheckForAReplay();
+                annouceAboutTheEndOfTheGameAndAskForARematch();
             }
         }
 
@@ -174,7 +174,7 @@ namespace CheckersWindowsApp
             LabelPlayerTwoScore.Text = r_CheckersGame.Player2.WinningPoints.ToString();
         }
 
-        private void annouceAboutTheEndOfTheGameAndCheckForAReplay()
+        private void annouceAboutTheEndOfTheGameAndAskForARematch()
         {
             StringBuilder endOfTheGameMessage = new StringBuilder();
             DialogResult dialogResult;
@@ -185,10 +185,31 @@ namespace CheckersWindowsApp
             if (dialogResult == DialogResult.Yes)
             {
                 r_CheckersGame.PrepareForANewGame();
+                restartTurnLabels();
+                refreshAllTilesContent();
             }
             else
             {
                 this.Close();
+            }
+        }
+
+        private void restartTurnLabels()
+        {
+            PanelPlayerOne.Enabled = true;
+            PanelPlayerTwo.Enabled = false;
+            PanelPlayerOne.BackgroundImage = Properties.Resources.wood_label;
+            PanelPlayerTwo.BackgroundImage = Properties.Resources.dark_wood_label;
+        }
+
+        private void refreshAllTilesContent()
+        {
+            foreach (PictureBoxBoardTile pictureBoxBoardTile in r_PictureBoxBoardTiles)
+            {
+                if ((Math.Abs(pictureBoxBoardTile.Position.Row - pictureBoxBoardTile.Position.Column) % 2) != 0)
+                {
+                    updateDarkTileContent(pictureBoxBoardTile);
+                }
             }
         }
 

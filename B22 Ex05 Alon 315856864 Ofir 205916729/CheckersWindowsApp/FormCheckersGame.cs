@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using CheckersEngine;
+using CheckersWindowsApp.Properties;
 
 namespace CheckersWindowsApp
 {
@@ -47,7 +48,10 @@ namespace CheckersWindowsApp
         {
             int scorePanelWidth = Math.Max(LabelPlayerOne.Width + LabelPlayerOneScore.Width + 50,
                 LabelPlayerTwo.Width + LabelPlayerTwoScore.Width + 50);
+
             PanelPlayerOne.Width = PanelPlayerTwo.Width = Math.Max(scorePanelWidth, 200);
+            PanelPlayerTwo.Enabled = false;
+            PanelPlayerTwo.BackgroundImage = Resources.dark_wood_label;
         }
 
         private void initializePictureBoxBoardTileArray()
@@ -136,7 +140,12 @@ namespace CheckersWindowsApp
 
         public void OnTurnChanged()
         {
+            Image swappedImage = PanelPlayerOne.BackgroundImage;
 
+            PanelPlayerOne.Enabled = !PanelPlayerOne.Enabled;
+            PanelPlayerTwo.Enabled = !PanelPlayerTwo.Enabled;
+            PanelPlayerOne.BackgroundImage = PanelPlayerTwo.BackgroundImage;
+            PanelPlayerTwo.BackgroundImage = swappedImage;
         }
 
         public void OnMoveMade(BoardCell i_SourceBoardCell, BoardCell i_DestinationBoardCell)

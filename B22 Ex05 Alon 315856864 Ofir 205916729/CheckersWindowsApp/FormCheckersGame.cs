@@ -15,7 +15,7 @@ namespace CheckersWindowsApp
         private readonly PictureBoxBoardTile[,] r_PictureBoxBoardTiles;
         private readonly List<BoardCell> r_PossibleMovesCells;
         private BoardCell m_ChosenSourceCell;
-        private bool m_ComputerIsCurrentlyPlaying = false;
+        private bool m_ComputerIsCurrentlyPlaying;
 
         internal class PictureBoxBoardTile : PictureBox
         {
@@ -47,7 +47,8 @@ namespace CheckersWindowsApp
             initializePictureBoxBoardTileArray();
             m_ChosenSourceCell = null;
             r_PossibleMovesCells = new List<BoardCell>();
-            r_CheckersGame.ComputersNeedsToPlay += OnComputerNeedsToPlay;
+            r_CheckersGame.ComputersNeedsToPlay += OnComputersTurn;
+            m_ComputerIsCurrentlyPlaying = false;
         }
 
         private void initializeScoreBoardLabels(string i_PlayerOneName, string i_PlayerTwoName)
@@ -65,8 +66,9 @@ namespace CheckersWindowsApp
 
         private void initializePictureBoxBoardTileArray()
         {
-            int cellTileSize = r_BoardSize == 6 ? 95 : r_BoardSize == 8 ? 75 : 60;
-
+            int cellTileSize;
+            
+            calculateCellTileSize(out cellTileSize);
             initializeComponentsSizesAndLocations(r_BoardSize, cellTileSize);
 
             for (int i = 0; i < r_BoardSize; ++i)
@@ -77,6 +79,22 @@ namespace CheckersWindowsApp
                     initializePictureBoxBoardTile(r_PictureBoxBoardTiles[i, j]);
                     PanelGameBoard.Controls.Add(r_PictureBoxBoardTiles[i, j]);
                 }
+            }
+        }
+
+        private void calculateCellTileSize(out int o_CellTileSize)
+        {
+            switch(r_BoardSize)
+            {
+                case 6:
+                    o_CellTileSize = 95;
+                    break;
+                case 10:
+                    o_CellTileSize = 60;
+                    break;
+                default:
+                    o_CellTileSize = 75;
+                    break;
             }
         }
 
@@ -199,7 +217,7 @@ namespace CheckersWindowsApp
             if (dialogResult == DialogResult.Yes)
             {
                 r_CheckersGame.PrepareForANewGame();
-                restartTurnLabels();
+                resetTurnLabels();
                 refreshAllTilesContent();
                 rematch = true;
             }
@@ -211,7 +229,7 @@ namespace CheckersWindowsApp
             return rematch;
         }
 
-        private void restartTurnLabels()
+        private void resetTurnLabels()
         {
             PanelPlayerOne.Enabled = true;
             PanelPlayerTwo.Enabled = false;
@@ -221,11 +239,11 @@ namespace CheckersWindowsApp
 
         private void refreshAllTilesContent()
         {
-            foreach (PictureBoxBoardTile pictureBoxBoardTile in r_PictureBoxBoardTiles)
+            foreach (PictureBoxBoardTile currentPictureBoxBoardTile in r_PictureBoxBoardTiles)
             {
-                if ((Math.Abs(pictureBoxBoardTile.Position.Row - pictureBoxBoardTile.Position.Column) % 2) != 0)
+                if ((Math.Abs(currentPictureBoxBoardTile.Position.Row - currentPictureBoxBoardTile.Position.Column) % 2) != 0)
                 {
-                    updateDarkTileContent(pictureBoxBoardTile);
+                    updateDarkTileContent(currentPictureBoxBoardTile);
                 }
             }
         }
@@ -259,11 +277,11 @@ namespace CheckersWindowsApp
                 }
                 else if(m_ChosenSourceCell == null)
                 {
-                    MessageBox.Show("There aren't any available moves from that tile", "Invalid move");
+                    MessageBox.Show("There aren't any available moves from that tile.", "Invalid Move");
                 }
                 else
                 {
-                    MessageBox.Show("That is not a possible move for this game piece.", "Invalid move");
+                    MessageBox.Show("That's not a possible move for the chosen game piece.", "Invalid Move");
                 }
             }
         }
@@ -343,7 +361,7 @@ namespace CheckersWindowsApp
             }
         }
 
-        private void OnComputerNeedsToPlay()
+        private void OnComputersTurn()
         {
             m_ComputerIsCurrentlyPlaying = true;
             TimerComputerTurnDelay.Start();

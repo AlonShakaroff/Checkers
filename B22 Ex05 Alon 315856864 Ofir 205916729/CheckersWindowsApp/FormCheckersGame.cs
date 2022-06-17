@@ -16,6 +16,7 @@ namespace CheckersWindowsApp
         private readonly List<BoardCell> r_PossibleMovesCells;
         private BoardCell m_ChosenSourceCell;
         private bool m_ComputerIsCurrentlyPlaying;
+        private bool m_ThePlayerWishToExitTheGame;
 
         internal class PictureBoxBoardTile : PictureBox
         {
@@ -49,6 +50,7 @@ namespace CheckersWindowsApp
             r_PossibleMovesCells = new List<BoardCell>();
             r_CheckersGame.ComputersNeedsToPlay += OnComputersTurn;
             m_ComputerIsCurrentlyPlaying = false;
+            m_ThePlayerWishToExitTheGame = false;
         }
 
         private void initializeScoreBoardLabels(string i_PlayerOneName, string i_PlayerTwoName)
@@ -224,6 +226,7 @@ namespace CheckersWindowsApp
             else
             {
                 rematch = false;
+                m_ThePlayerWishToExitTheGame = true;
             }
 
             return rematch;
@@ -369,7 +372,11 @@ namespace CheckersWindowsApp
 
         private void formCheckersGame_FormClosing(object i_Sender, FormClosingEventArgs i_E)
         {
-            if(m_ComputerIsCurrentlyPlaying)
+            if(m_ThePlayerWishToExitTheGame)
+            {
+                i_E.Cancel = false;
+            }
+            else if(m_ComputerIsCurrentlyPlaying)
             {
                 i_E.Cancel = true;
             }

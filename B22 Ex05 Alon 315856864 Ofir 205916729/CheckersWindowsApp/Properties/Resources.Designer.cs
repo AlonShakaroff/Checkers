@@ -19,7 +19,7 @@ namespace CheckersWindowsApp.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -65,17 +65,7 @@ namespace CheckersWindowsApp.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap black_king {
             get {
-                object obj = ResourceManager.GetObject("black-king", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap black_king_on_tile {
-            get {
-                object obj = ResourceManager.GetObject("black-king-on-tile", resourceCulture);
+                object obj = ResourceManager.GetObject("black_king", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,19 +83,9 @@ namespace CheckersWindowsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap black_pawn_on_tile {
-            get {
-                object obj = ResourceManager.GetObject("black-pawn-on-tile", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap chosen_dark_tile {
             get {
-                object obj = ResourceManager.GetObject("chosen-dark-tile", resourceCulture);
+                object obj = ResourceManager.GetObject("chosen_dark_tile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -115,7 +95,7 @@ namespace CheckersWindowsApp.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap dark_tile {
             get {
-                object obj = ResourceManager.GetObject("dark-tile", resourceCulture);
+                object obj = ResourceManager.GetObject("dark_tile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,29 +133,9 @@ namespace CheckersWindowsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap white_king_on_tile {
-            get {
-                object obj = ResourceManager.GetObject("white-king-on-tile", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap white_pawn {
             get {
-                object obj = ResourceManager.GetObject("white-pawn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap white_pawn_on_tile {
-            get {
-                object obj = ResourceManager.GetObject("white-pawn-on-tile", resourceCulture);
+                object obj = ResourceManager.GetObject("white_pawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -185,7 +145,7 @@ namespace CheckersWindowsApp.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap white_tile {
             get {
-                object obj = ResourceManager.GetObject("white-tile", resourceCulture);
+                object obj = ResourceManager.GetObject("white_tile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

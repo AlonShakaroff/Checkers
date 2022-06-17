@@ -15,6 +15,7 @@ namespace CheckersWindowsApp
         private readonly PictureBoxBoardTile[,] r_PictureBoxBoardTiles;
         private readonly List<BoardCell> r_PossibleMovesCells;
         private BoardCell m_ChosenSourceCell;
+        private bool m_ComputerIsCurrentlyPlaying = false;
 
         internal class PictureBoxBoardTile : PictureBox
         {
@@ -239,7 +240,7 @@ namespace CheckersWindowsApp
             PictureBoxBoardTile clickedBoardTile = i_Sender as PictureBoxBoardTile;
             BoardCell clickedBoardCell;
 
-            if (clickedBoardTile != null)
+            if (clickedBoardTile != null && !m_ComputerIsCurrentlyPlaying)
             {
                 clickedBoardCell = r_CheckersGame.GameBoard.Board[clickedBoardTile.Position.Row, clickedBoardTile.Position.Column];
 
@@ -255,6 +256,14 @@ namespace CheckersWindowsApp
                 {
                     r_CheckersGame.MakeAMove(m_ChosenSourceCell?.Position, clickedBoardCell.Position);
                     deselectPictureBoxBoardCellTile();
+                }
+                else if(m_ChosenSourceCell == null)
+                {
+                    MessageBox.Show("There aren't any available moves from that tile", "Invalid move");
+                }
+                else
+                {
+                    MessageBox.Show("That is not a possible move for this game piece.", "Invalid move");
                 }
             }
         }
@@ -309,7 +318,7 @@ namespace CheckersWindowsApp
             PictureBoxBoardTile enteredPictureBoxBoardTile = i_Sender as PictureBoxBoardTile;
             BoardCell enteredBoardCell;
 
-            if (enteredPictureBoxBoardTile != null)
+            if (enteredPictureBoxBoardTile != null && !m_ComputerIsCurrentlyPlaying)
             {
                 enteredBoardCell = r_CheckersGame.GameBoard.Board[enteredPictureBoxBoardTile.Position.Row, enteredPictureBoxBoardTile.Position.Column];
 
@@ -326,7 +335,7 @@ namespace CheckersWindowsApp
         {
             PictureBoxBoardTile leftPictureBoxBoardTile = i_Sender as PictureBoxBoardTile;
 
-            if(leftPictureBoxBoardTile != null)
+            if(leftPictureBoxBoardTile != null && !m_ComputerIsCurrentlyPlaying)
             {
                 leftPictureBoxBoardTile.BackgroundImage = Resources.dark_tile;
                 leftPictureBoxBoardTile.Cursor = Cursors.Default;
@@ -336,14 +345,22 @@ namespace CheckersWindowsApp
 
         private void OnComputerNeedsToPlay()
         {
+            m_ComputerIsCurrentlyPlaying = true;
             TimerComputerTurnDelay.Start();
         }
 
         private void formCheckersGame_FormClosing(object i_Sender, FormClosingEventArgs i_E)
         {
-            r_CheckersGame.SwitchPlayersTurns();
-            r_CheckersGame.FinishTheGame();
-            i_E.Cancel = announceAboutTheEndOfTheGameAndAskForARematch();
+            if(m_ComputerIsCurrentlyPlaying)
+            {
+                i_E.Cancel = true;
+            }
+            else
+            {
+                r_CheckersGame.SwitchPlayersTurns();
+                r_CheckersGame.FinishTheGame();
+                i_E.Cancel = announceAboutTheEndOfTheGameAndAskForARematch();
+            }
         }
 
         private void timerComputerTurnDelay_Tick(object i_Sender, EventArgs i_E)
@@ -353,6 +370,7 @@ namespace CheckersWindowsApp
             TimerComputerTurnDelay.Stop();
             r_CheckersGame.GetAMoveFromTheComputer(out sourcePosition, out destinationPosition);
             r_CheckersGame.MakeAMove(sourcePosition, destinationPosition);
+            m_ComputerIsCurrentlyPlaying = false;
         }
     }
 }
